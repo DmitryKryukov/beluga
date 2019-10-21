@@ -9,3 +9,16 @@
   transition-timing-function: $timing;
   transition-delay: $delay;
 }
+@mixin muted() {
+  color: var(--color-muted);
+}
+@mixin uppercase() {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+@mixin sticky($top: 0) {
+  position: sticky;
+  top: $top;
+  z-index: 999;
+  backdrop-filter: var(--backdrop);
+}

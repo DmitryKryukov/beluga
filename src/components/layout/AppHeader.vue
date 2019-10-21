@@ -15,7 +15,8 @@ export default {
   }
 };
 </script>
-<style scoped  lang="scss">
+<style scoped lang="scss">
+@import "../../styles/mixins";
 .app-header {
   padding: 19px var(--view-margin) 19px;
   padding-top: 65px;
@@ -30,6 +31,10 @@ export default {
     line-height: 41px;
     font-feature-settings: "pnum" on, "lnum" on, "ordn" on;
     font-size: var(--font-size-title);
+  }
+  &__link {
+    @include muted;
+    @include uppercase;
   }
 }
 </style>

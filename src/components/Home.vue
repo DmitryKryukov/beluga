@@ -1,7 +1,7 @@
 <template lang="pug">
   #page
     AppHeader(title="Белуга")
-      a(href="#").text--muted.text--uppercase Все акции →
+      a(href="#").app-header__link Все акции →
     aside.scroller.scroller--discount.scroller--borderless
       DiscountCard
       DiscountCard
