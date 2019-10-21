@@ -1,0 +1,27 @@
+:root {
+  --bg: #0f1219;
+  --plain: #13151ae6;
+  --color: #f3f3f3;
+  --color-muted: #797e86;
+  --color-muted-transparent: #23272d;
+  --primary: #996f33;
+  --danger: #cf3905;
+
+  --grad-placeholder: linear-gradient(114.91deg, #282a2e 0%, #3c3f43 100%);
+
+  --backdrop: blur(26px);
+
+  --border: 1px solid #181a1f;
+
+  --font-family: "SF Pro Display", sans-serif;
+  --font-family-accent: Playfair Display;
+  --font-size-title: 2.125rem;
+  --font-size-heading: 0.9375rem;
+  --font-size-footer: 0.625rem;
+
+  --view-margin: 15px;
+  --view-gap: 9px;
+  --border-radius: 8px;
+
+  --inputIndicatorPosition: 0px;
+}

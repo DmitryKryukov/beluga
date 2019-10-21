@@ -1,0 +1,21 @@
+<template lang="pug">
+  .discount-card
+    .discount-card-name
+</template>
+
+<script>
+export default {};
+</script>
+<style scoped lang="scss">
+.discount-card {
+  min-width: 227px;
+  width: 100%;
+  min-height: 128px;
+  background-color: var(--plain);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  position: relative;
+  background-image: var(--grad-placeholder);
+  background-color: #3c3f43;
+}
+</style>

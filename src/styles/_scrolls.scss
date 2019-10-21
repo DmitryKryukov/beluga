@@ -1,0 +1,32 @@
+//ГЛОБАЛЬНЫЕ СТИЛИ
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.scroller {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: auto;
+  background: var(--plain);
+  border-top: var(--border);
+  border-bottom: var(--border);
+  margin-top: -1px;
+  &__borderless {
+    //Модифификатор скрывает бордеры
+    border-top: none;
+    border-bottom: none;
+  }
+  &:not(.scroller__nogap) {
+    &::before,
+    &::after {
+      //Псевдоэлементы сдвигают ленту на поле вида
+      content: "";
+      min-width: var(--view-margin);
+    }
+    & > * {
+      &:not(:last-child) {
+        margin-right: var(--view-gap);
+      }
+    }
+  }
+}

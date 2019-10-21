@@ -1,0 +1,89 @@
+@import "variables";
+@import "mixins";
+@import "reset";
+@import "scrolls";
+@import "controlls";
+
+//ТЭГИ
+* {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--color);
+}
+a,
+a:visited {
+  color: var(--color);
+  text-decoration: none;
+}
+hr {
+  border: none;
+  border-top: 1px solid var(--color-muted-transparent);
+  margin-top: var(--view-margin);
+  padding-bottom: 5px;
+}
+
+//СЕТКА
+#page {
+  padding-bottom: 89px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+.row {
+  display: flex;
+  margin-left: calc(var(--view-margin) - var(--view-gap) / 2);
+  margin-right: calc(var(--view-margin) - var(--view-gap) / 2);
+}
+.col {
+  width: 100%;
+  margin-left: calc(var(--view-gap) / 2);
+  margin-right: calc(var(--view-gap) / 2);
+  & > *:not(:last-child) {
+    margin-bottom: var(--view-gap);
+  }
+}
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: var(--backdrop);
+}
+
+//ТИПОГРАФИКА
+.link,
+a.link {
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.05em;
+  &__ribbon {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    flex: 0 0 auto;
+    font-size: 17px;
+    line-height: 20px;
+    font-feature-settings: "case" on;
+    padding: 13px 15px 13px;
+    &-active {
+      color: var(--color);
+    }
+  }
+  &__exit {
+    display: block;
+    color: var(--danger);
+    font-size: var(--font-size-heading);
+    padding-top: 19px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+.__uppercase {
+  text-transform: uppercase;
+}
+.__muted {
+  color: var(--color-muted);
+}

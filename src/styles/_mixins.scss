@@ -1,0 +1,11 @@
+@mixin transition(
+  $property: all,
+  $duration: 0.3s,
+  $timing: cubic-bezier(0.42, 0, 0.58, 1),
+  $delay: 0s
+) {
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-timing-function: $timing;
+  transition-delay: $delay;
+}
