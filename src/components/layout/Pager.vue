@@ -1,9 +1,9 @@
 <template lang="pug">
   .wrapper
-    nav.scroller.scroller__nogap.sticky(ref="scroller")
-      a.link.link__ribbon.pager-tab(v-for="tab in tabs", :key="tab.id", :class="{'link__ribbon-active':tab.active}" @click="categoryClick(tab.id)") {{tab.name}}
-      .scroller-indicator(ref="indicator", :style="'left:' +(pager.indicator.startLeft  + pager.indicator.relScroll * (pager.indicator.goalLeft - pager.indicator.startLeft))+'px; width:' +(pager.indicator.startWidth  + pager.indicator.relScroll * (pager.indicator.goalWidth - pager.indicator.startWidth))+'px;'")     
-    main.pager(ref="pager", @scroll="pagerScroll", v-touch:start="pagerTouch")
+    nav.scroller.scroller--nogap.sticky(ref = "scroller")
+      a.link.link--ribbon(v-for = "tab in tabs", :key = "tab.id", :class = "{'link--ribbon--active' : tab.active}" @click = "categoryClick(tab.id)") {{tab.name}}
+      .scroller__indicator(ref = "indicator", :style = "'left:' +(pager.indicator.startLeft  + pager.indicator.relScroll * (pager.indicator.goalLeft - pager.indicator.startLeft))+'px; width:' + (pager.indicator.startWidth  + pager.indicator.relScroll * (pager.indicator.goalWidth - pager.indicator.startWidth))+'px;'")     
+    main.pager(ref = "pager", @scroll = "pagerScroll", v-touch:start = "pagerTouch")
       slot
  </template>
 
@@ -47,7 +47,7 @@ export default {
   mounted() {
     let pages = this.$refs.pager.childNodes;
     pages.forEach(function(page) {
-      page.classList.add("pager-item");
+      page.classList.add("pager__item");
     });
     this.init();
     this.pager.indicator.startLeft = this.pager.tabLinks.lefts[0];
@@ -192,7 +192,7 @@ export default {
   max-width: calc(100vw + var(--view-margin));
   scroll-behavior: smooth;
   align-items: flex-start;
-  &-item {
+  &__item {
     padding-top: 20px;
     width: 100%;
     min-width: 100vw;
@@ -203,7 +203,7 @@ export default {
   }
 }
 .scroller {
-  &-indicator {
+  &__indicator {
     width: 65px;
     height: 3px;
     position: absolute;

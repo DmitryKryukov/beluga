@@ -11,12 +11,12 @@
   border-top: var(--border);
   border-bottom: var(--border);
   margin-top: -1px;
-  &__borderless {
+  &--borderless {
     //Модифификатор скрывает бордеры
     border-top: none;
     border-bottom: none;
   }
-  &:not(.scroller__nogap) {
+  &:not(.scroller--nogap) {
     &::before,
     &::after {
       //Псевдоэлементы сдвигают ленту на поле вида

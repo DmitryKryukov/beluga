@@ -1,8 +1,8 @@
 <template lang="pug">
   #page
     AppHeader(title="Белуга")
-      a(href="#").link.__uppercase Все акции →
-    aside.scroller.scroller__discount.scroller__borderless
+      a(href="#").text--muted.text--uppercase Все акции →
+    aside.scroller.scroller--discount.scroller--borderless
       DiscountCard
       DiscountCard
       DiscountCard
@@ -247,6 +247,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+//Два селектора ниже скрывает каждый второй элемент в колонке
 .col:first-of-type {
   & > *:nth-child(even) {
     //todo Перенести в компьютед
@@ -259,10 +260,11 @@ export default {
     display: none;
   }
 }
-.scroller__discount {
-  margin-bottom: 21px;
+.scroller--discount {
+  padding-bottom: 21px;
 }
 /deep/ .dish-card {
+  //Добавляем поле между карточками блюд
   margin-bottom: var(--view-gap);
 }
 </style>

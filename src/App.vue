@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    main.main-wrapper     
+    .main-wrapper     
       transition(name="slide")
         router-view
     AppFooter
