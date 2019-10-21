@@ -1,6 +1,6 @@
 <template lang="pug">
   .discount-card
-    .discount-card-name
+    .discount-card__name
 </template>
 
 <script>

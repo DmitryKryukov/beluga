@@ -1,25 +1,26 @@
 <template lang="pug">
+  mixin contact-group(caption = "", main = "", aside = "")
+    .contact-group   
+      .contact-group__info
+        if aside
+          .contact-group__info--aside  !{aside}
+          .contact-group__info--main !{main}
+        else
+          .contact-group__info !{main}
+      .contact-group__caption !{caption}
+
+
   #page
     AppHeader(title="О нас")
     Pager(:tabs = "[{id: 0, name: 'Контакты'},{id: 1, name: 'Акции и промокоды'},{id: 2, name: 'Залы'}]")
       section
         .row
           .col
-            .contact-group
-              .contact-group-info.phone 
-                aside +7&nbsp;8512
-                main &nbsp;99&nbsp;99&nbsp;27
-              .contact-group-caption Закажите доставку
-            .contact-group
-              .contact-group-info.phone 
-                aside +7&nbsp;8512
-                main &nbsp;99&nbsp;99&nbsp;28&nbsp;
-              .contact-group-caption Забронируйте столик
-            .contact-group
-              .contact-group-info Фиолетова,3
-              .contact-group-caption Находимся в самом центре города
+            +contact-group("Закажите доставку","&nbsp;99&nbsp;99&nbsp;27","+7&nbsp;8512")
+            +contact-group("Забронируйте столик","&nbsp;99&nbsp;99&nbsp;28","+7&nbsp;8512")
+            +contact-group("Находимся в центре города","Фиолетова, 3")
             .map
-            //Button(text="Инстаграмм")    
+            Button(text="Инстаграмм")    
       section
         .row
           .col
@@ -28,7 +29,6 @@
             DiscountCard
             DiscountCard
             DiscountCard
-      section Залы        
  </template>
 
 <script>
@@ -53,19 +53,17 @@ export default {
 .contact-group {
   display: block;
   margin-bottom: var(--view-margin);
-  &-info {
+  &__info {
     display: flex;
     align-items: baseline;
     margin-bottom: 6px;
     font-size: 17px;
 
-    &.phone {
-      aside {
-        font-size: 13px;
-      }
+    &--aside {
+      font-size: 13px;
     }
   }
-  &-caption {
+  &__caption {
     font-size: 13px;
     color: var(--color-muted);
   }
@@ -76,7 +74,7 @@ export default {
   margin-bottom: calc(var(--view-margin) * 3);
   border-radius: var(--border-radius);
   height: 262px;
-  background-color: var(--primary);
+  background-color: var(--plain);
 }
 .discount-card {
   margin-bottom: var(--view-gap);

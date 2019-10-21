@@ -3,6 +3,7 @@
     nav.scroller.scroller--nogap(ref = "scroller")
       a.scroller__link(v-for = "tab in tabs", :key = "tab.id", :class = "{'scroller__link--active' : tab.active}" @click = "categoryClick(tab.id)") {{tab.name}}
       .scroller__indicator(ref = "indicator", :style = "'left:' +(pager.indicator.startLeft  + pager.indicator.relScroll * (pager.indicator.goalLeft - pager.indicator.startLeft))+'px; width:' + (pager.indicator.startWidth  + pager.indicator.relScroll * (pager.indicator.goalWidth - pager.indicator.startWidth))+'px;'")
+
     main.pager(ref = "pager", @scroll = "pagerScroll", v-touch:start = "pagerTouch")
       slot
  </template>
@@ -66,7 +67,7 @@ export default {
 
       let pagerItemCurrent = pagerItems[newVal - 1];
       let pageHeight = pagerItemCurrent.clientHeight;
-      this.$refs.pager.style.height = pageHeight + 7 + "px";
+      this.$refs.pager.style.height = pageHeight + +"px";
       this.$refs.pager.style.overflowY = "hidden";
     },
     "pager.page.currentApprox": function(newVal, oldVal) {
@@ -109,6 +110,13 @@ export default {
       this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[1];
       this.pager.indicator.startWidth = this.pager.tabLinks.widths[0];
       this.pager.indicator.goalWidth = this.pager.tabLinks.widths[1];
+
+      //Блок ниже должен устанавливать высоту пейджера при инициализации, но пока работает некорректно
+      //let pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
+      //let pagerItemCurrent = pagerItems[0];
+      //let pageHeight = pagerItemCurrent.clientHeight;
+      //this.$refs.pager.style.height = pageHeight + "px"; //todo сделать универсальное изменение высоты пейджера
+      //this.$refs.pager.style.overflowY = "hidden";
     },
 
     handleIndicatorSmooth(pagerScroll) {

@@ -47,7 +47,9 @@ export default {
 <style scoped  lang="scss">
 .app-footer {
   position: fixed;
+
   top: calc(100vh - 83px);
+  bottom: 0;
   width: 100vw;
   padding: 8px 0 30px;
   background-color: var(--plain);

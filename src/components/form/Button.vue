@@ -1,6 +1,8 @@
 <template lang="pug">
     .btn-group
-      button(@click="btnClick").btn {{text}}
+      button(@click="btnClick").btn: slot(name='prefix') {{text}}
+        slot(name='postfix')
+        
  </template>
  
 
@@ -19,6 +21,7 @@ export default {
   mounted() {},
   methods: {
     btnClick: function(event) {
+      console.log(event.target);
       ripple(event);
       function ripple(e) {
         const rect = {
@@ -62,7 +65,7 @@ export default {
   width: 100%;
   position: relative;
   font-family: var(--font-family);
-  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: all 0.3s var(--ease);
   user-select: none;
 
   &-group {
@@ -70,8 +73,9 @@ export default {
     background-color: var(--primary);
     border-radius: var(--border-radius);
     border-bottom: 2px solid #523924;
-    transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
+    transition: all 0.1s var(--ease);
     overflow: hidden;
+    position: relative;
     z-index: 2;
     &:active {
       transform: scale(0.96);
