@@ -1,11 +1,11 @@
 <template lang="pug">
-  router-link(:to="'/dish/' + dish.id")
-    .dish-card(@click="cardClick")
-      .dish-card-photo
-      h2.dish-card-name {{dish.name}}
-      footer.dish-card-footer
-        span.dish-card-footer-aside(v-if="dish.aside") {{dish.aside}}
-        button.dish-card-footer-btn.btn(@click.prevent.stop="addToCart") {{dish.price}}
+  router-link(:to = "'/dish/' + dish.id")
+    .dish-card(@click = "cardClick")
+      .dish-card__photo
+      h2.dish-card__name {{dish.name}}
+      footer.dish-card__footer
+        span.dish-card__footer__aside(v-if = "dish.aside") {{dish.aside}}
+        button.dish-card__footer__btn(@click.prevent.stop = "addToCart") {{dish.price}}
 </template>
 
 <script>
@@ -17,36 +17,13 @@ export default {
     }
   },
   methods: {
-    cardClick() {
-      //ripple(event);
-
-      function ripple(e) {
-        const rect = {
-          top: e.target.offsetTop,
-          left: e.target.getBoundingClientRect().left
-        };
-        console.log(e.target);
-        var clickPosition = {
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top + window.pageYOffset
-        };
-        var ripple = document.createElement("div");
-        ripple.className = "rippler";
-        ripple.style.left = clickPosition.x + "px";
-        ripple.style.top = clickPosition.y + "px";
-        e.target.appendChild(ripple);
-        ripple.addEventListener("animationend", function() {
-          ripple.remove();
-        });
-      }
-    },
-    addToCart() {
-      alert("Добавлено в корзину");
-    }
+    cardClick() {},
+    addToCart() {}
   }
 };
 </script>
 <style scoped lang="scss">
+@import "../../styles/mixins";
 .dish-card {
   display: block;
   min-height: 218px;
@@ -56,20 +33,20 @@ export default {
   position: relative;
   transition: all 1s;
 
-  &-photo {
+  &__photo {
     pointer-events: none;
     background-image: var(--grad-placeholder);
     background-color: #3c3f43;
     width: 100%;
     padding-bottom: 68.452%;
   }
-  &-name {
+  &__name {
     pointer-events: none;
     font-size: var(--font-size-heading);
     margin: 10px 13px 53px;
     line-height: 20px;
   }
-  &-footer {
+  &__footer {
     position: absolute;
     bottom: 0;
     box-sizing: border-box;
@@ -79,16 +56,17 @@ export default {
     align-items: baseline;
     justify-content: space-between;
     pointer-events: none;
-    &-aside {
+    &__aside {
       font-size: 10px;
       line-height: 12px;
       letter-spacing: 0.05em;
       color: var(--color-muted);
     }
-    &-btn {
+    &__btn {
       padding: 3px 8px 4px 6px;
       margin-left: auto;
       pointer-events: all;
+      @include btn();
     }
   }
 }

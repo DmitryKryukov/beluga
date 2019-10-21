@@ -22,3 +22,12 @@
   z-index: 999;
   backdrop-filter: var(--backdrop);
 }
+@mixin btn() {
+  background-color: var(--primary);
+  color: var(--color);
+  border: none;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+  font-feature-settings: "pnum" on, "lnum" on, "case" on, "ss01" on;
+}

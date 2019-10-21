@@ -1,13 +1,12 @@
 <template lang="pug">
   #page
     AppHeader(title="Любимое")
-    main
-      section.row
-       .col 
-          DishCard(:dish="dishMock")
-          DishCard(:dish="dishMock")
-       .col
-          DishCard(:dish="dishMock")
+    section.row
+     .col 
+        DishCard(:dish="dishMock")
+        DishCard(:dish="dishMock")
+     .col
+        DishCard(:dish="dishMock")
  </template>
 
 <script>
@@ -33,10 +32,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-main {
+section {
   padding-top: 20px;
 }
 /deep/ .dish-card {
+  //Добавляем поле между карточками блюд
   margin-bottom: var(--view-gap);
 }
 </style>
