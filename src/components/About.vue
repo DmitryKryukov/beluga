@@ -76,10 +76,7 @@ export default {
   height: 262px;
   background-color: var(--plain);
 }
-.discount-card {
+.discount-card:not(:last-child) {
   margin-bottom: var(--view-gap);
-  &:last-child {
-    margin-bottom: 107px;
-  }
 }
 </style>

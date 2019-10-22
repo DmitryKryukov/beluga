@@ -253,18 +253,26 @@ export default {
     //todo Перенести в компьютед
     display: none;
   }
+  a:not(:last-child) {
+    /deep/ .dish-card {
+      //Добавляем поле между карточками блюд
+      margin-bottom: var(--view-gap);
+    }
+  }
 }
 .col:last-of-type {
   & > *:nth-child(odd) {
     //todo Перенести в компьютед
     display: none;
   }
+  a:not(:last-child) {
+    /deep/ .dish-card {
+      //Добавляем поле между карточками блюд
+      margin-bottom: var(--view-gap);
+    }
+  }
 }
 .scroller--discount {
   padding-bottom: 21px;
-}
-/deep/ .dish-card {
-  //Добавляем поле между карточками блюд
-  margin-bottom: var(--view-gap);
 }
 </style>

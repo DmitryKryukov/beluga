@@ -1,9 +1,9 @@
 <template lang="pug">
   #app
-    .main-wrapper     
+    .main-wrapper
       transition(name="slide")
         router-view
-    AppFooter
+    AppFooter(@nextView = "viewScroll")
 </template>
 
 <script>
@@ -13,32 +13,39 @@ export default {
   name: "app",
   components: {
     AppFooter
+  },
+  methods: {
+    viewScroll(viewScrollY) {
+      let scroll = "-" + viewScrollY + "px";
+      document.documentElement.style.setProperty("--scrollYView", scroll);
+    }
   }
 };
 </script>
 <style src="./styles/global.scss" lang="scss"></style>
 <style scoped lang="scss">
-/*
+.main-wrapper {
+  min-height: calc(
+    100vh - 85px
+  ); //Стиль нужен, чтобы подвал не прыгал при переключении содержимогов в fixed. 85px — высота футера
+}
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  position: fixed;
   width: 100vw;
-  position: absolute;
   height: 100vh;
-  overflow: hidden;
+
+  transition: all 0.3s var(--ease);
 }
 .slide-leave-active {
-}
-.slide-enter-active {
-  position: fixed;
+  top: var(--scrollYView);
 }
 .slide-enter {
-  transform: translateX(100vw);
+  transform: translateX(50vw);
   opacity: 0;
 }
 .slide-leave-to {
-  transform: translateX(-100vw);
+  transform: translateX(-50vw);
   opacity: 0;
 }
-*/
 </style>

@@ -28,9 +28,8 @@ hr {
 
 //СЕТКА
 #page {
-  padding-bottom: 89px;
   box-sizing: border-box;
-  min-height: 100vh;
+  padding-bottom: var(--view-margin);
 }
 .row {
   display: flex;
@@ -52,19 +51,7 @@ a.link {
   font-size: 13px;
   line-height: 15px;
   letter-spacing: 0.05em;
-  &--ribbon {
-    position: relative;
-    overflow: hidden;
-    display: block;
-    flex: 0 0 auto;
-    font-size: 17px;
-    line-height: 20px;
-    font-feature-settings: "case" on;
-    padding: 13px 15px 13px;
-    &--active {
-      color: var(--color);
-    }
-  }
+
   &--exit {
     display: block;
     color: var(--danger);
