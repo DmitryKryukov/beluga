@@ -27,14 +27,13 @@ export default {
 .main-wrapper {
   min-height: calc(
     100vh - 85px
-  ); //Стиль нужен, чтобы подвал не прыгал при переключении содержимогов в fixed. 85px — высота футера
+  ); //Свойство добавлено, чтобы подвал не прыгал при изменении позишн содержимого на фиксед. 85px — высота футера
 }
 .slide-enter-active,
 .slide-leave-active {
   position: fixed;
   width: 100vw;
   height: 100vh;
-
   transition: all 0.3s var(--ease);
 }
 .slide-leave-active {

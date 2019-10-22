@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     routerClick() {
-      this.$emit("nextView", window.scrollY);
+      this.$emit("nextView", window.pageYOffset);
     }
   }
 };

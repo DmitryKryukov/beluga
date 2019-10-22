@@ -48,32 +48,6 @@ export default {
   mounted() {
     this.init();
   },
-  watch: {
-    "pager.page.current": function(newVal, oldVal) {
-      this.pager.indicator.startLeft = this.pager.tabLinks.lefts[newVal - 1];
-      this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[newVal];
-      this.pager.indicator.startWidth = this.pager.tabLinks.widths[newVal - 1];
-      this.pager.indicator.goalWidth = this.pager.tabLinks.widths[newVal];
-
-      let pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
-
-      //  pagerItems.forEach(function(pagerItem) {
-      //  pagerItem.style.marginTop = 0;
-      // });
-
-      //if (window.scrollY > this.pager.top) {
-      //  window.scrollTo(0, this.pager.top);
-      //}
-
-      // let pagerItemCurrent = pagerItems[newVal - 1];
-      //let pageHeight = pagerItemCurrent.clientHeight;
-      // this.$refs.pager.style.height = pageHeight + "px";
-      // this.$refs.pager.style.overflowY = "hidden";
-    },
-    "pager.page.currentApprox": function(newVal, oldVal) {
-      this.categoryChanged(newVal, oldVal);
-    }
-  },
   methods: {
     init() {
       //Вызывается onMounted, инициализируем настройки пейджера
@@ -111,14 +85,35 @@ export default {
       this.pager.indicator.startWidth = this.pager.tabLinks.widths[0];
       this.pager.indicator.goalWidth = this.pager.tabLinks.widths[1];
 
-      //Блок ниже должен устанавливать высоту пейджера при инициализации, но пока работает некорректно
-      //let pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
-      //let pagerItemCurrent = pagerItems[0];
-      //let pageHeight = pagerItemCurrent.clientHeight;
-      //this.$refs.pager.style.height = pageHeight + "px"; //todo сделать универсальное изменение высоты пейджера
-      //this.$refs.pager.style.overflowY = "hidden";
+      this.changePageHeight(0);
     },
 
+    changePageHeight(num = 0) {
+      const footerHeight = 85;
+      const pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
+
+      let currentPageHeight = pagerItems[num].childNodes[0].clientHeight + 20; //20 — нижний паддинг пейджа;
+      let minPageHeight =
+        document.documentElement.clientHeight -
+        footerHeight -
+        //this.pager.top - todo подумать над универсальным поведением
+        60;
+      let newPageHeight = Math.max(minPageHeight, currentPageHeight);
+
+      this.$refs.pager.style.height = newPageHeight + "px";
+      this.$refs.pager.style.overflowY = "hidden";
+      this.resetPageMargin();
+    },
+    resetPageMargin() {
+      let pagerItems = this.$refs.pager.childNodes; //todo Вынести в настройки Выбираем все страницы
+      pagerItems.forEach(function(pagerItem) {
+        pagerItem.style.marginTop = 0;
+      });
+
+      if (window.scrollY > this.pager.top) {
+        window.scrollTo(0, this.pager.top - 25);
+      }
+    },
     handleIndicatorSmooth(pagerScroll) {
       this.pager.indicator.relScroll =
         (pagerScroll / this.pager.innerWidth) * this.pager.page.count +
@@ -181,6 +176,7 @@ export default {
       this.handleIndicatorSmooth(pagerScroll);
 
       this.scrollerScroll();
+
       this.neighbourPageSet();
     },
 
@@ -189,20 +185,33 @@ export default {
     },
 
     neighbourPageSet() {
+      this.$refs.pager.style.height = "auto";
+      this.$refs.pager.style.overflowY = "visible";
       if (window.scrollY > this.pager.top) {
         let nextPage = this.$refs.pager.childNodes[this.pager.page.current];
-        let currentPage = this.$refs.pager.childNodes[
-          this.pager.page.current - 1
-        ];
         let prevPage = this.$refs.pager.childNodes[this.pager.page.current - 2];
 
         if (nextPage) {
-          //   nextPage.style.marginTop =           window.scrollY - this.pager.top + 22 + "px";
+          nextPage.style.marginTop =
+            window.pageYOffset - this.pager.top + 25 + "px";
         }
         if (prevPage) {
-          //  prevPage.style.marginTop = window.scrollY - this.pager.top + 22 + "px";
+          prevPage.style.marginTop =
+            window.pageYOffset - this.pager.top + 25 + "px";
         }
       }
+    }
+  },
+  watch: {
+    "pager.page.current": function(newVal, oldVal) {
+      this.pager.indicator.startLeft = this.pager.tabLinks.lefts[newVal - 1];
+      this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[newVal];
+      this.pager.indicator.startWidth = this.pager.tabLinks.widths[newVal - 1];
+      this.pager.indicator.goalWidth = this.pager.tabLinks.widths[newVal];
+      this.changePageHeight(newVal - 1);
+    },
+    "pager.page.currentApprox": function(newVal, oldVal) {
+      this.categoryChanged(newVal, oldVal);
     }
   }
 };
@@ -219,6 +228,7 @@ export default {
   max-width: calc(100vw + var(--view-margin));
   scroll-behavior: smooth;
   align-items: flex-start;
+  overflow-y: hidden;
   &__item {
     padding-top: 20px;
     width: 100%;
