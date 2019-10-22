@@ -57,18 +57,18 @@ export default {
 
       let pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
 
-      pagerItems.forEach(function(pagerItem) {
-        pagerItem.style.marginTop = 0;
-      });
+      //  pagerItems.forEach(function(pagerItem) {
+      //  pagerItem.style.marginTop = 0;
+      // });
 
-      if (window.scrollY > this.pager.top) {
-        window.scrollTo(0, this.pager.top);
-      }
+      //if (window.scrollY > this.pager.top) {
+      //  window.scrollTo(0, this.pager.top);
+      //}
 
-      let pagerItemCurrent = pagerItems[newVal - 1];
-      let pageHeight = pagerItemCurrent.clientHeight;
-      this.$refs.pager.style.height = pageHeight + +"px";
-      this.$refs.pager.style.overflowY = "hidden";
+      // let pagerItemCurrent = pagerItems[newVal - 1];
+      //let pageHeight = pagerItemCurrent.clientHeight;
+      // this.$refs.pager.style.height = pageHeight + "px";
+      // this.$refs.pager.style.overflowY = "hidden";
     },
     "pager.page.currentApprox": function(newVal, oldVal) {
       this.categoryChanged(newVal, oldVal);
@@ -197,12 +197,10 @@ export default {
         let prevPage = this.$refs.pager.childNodes[this.pager.page.current - 2];
 
         if (nextPage) {
-          nextPage.style.marginTop =
-            window.scrollY - this.pager.top + 22 + "px";
+          //   nextPage.style.marginTop =           window.scrollY - this.pager.top + 22 + "px";
         }
         if (prevPage) {
-          prevPage.style.marginTop =
-            window.scrollY - this.pager.top + 22 + "px";
+          //  prevPage.style.marginTop = window.scrollY - this.pager.top + 22 + "px";
         }
       }
     }

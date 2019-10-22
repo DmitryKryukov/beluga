@@ -1,54 +1,44 @@
 <template lang="pug">
   footer.app-footer  
-    AppFooterItem(v-for="footerItem in footerItems", :key="footerItem.id", :footerItem="footerItem")
+
+    router-link(:to="{path: '/'}")
+      .app-footer__item
+        <img svg-inline class="app-footer__item__icon" :src="../assets/footer/menu.svg" alt="" />
+        .app-footer__item__text Меню
+    
+    router-link(:to="{path: '/favourite'}")
+      .app-footer__item
+        <img svg-inline class="app-footer__item__icon" :src="../assets/footer/favourite.svg" alt="" />
+        .app-footer__item__text Любимое
+    
+    router-link(:to="{path: '/about'}")
+      .app-footer__item
+        <img svg-inline class="app-footer__item__icon" :src="../assets/footer/about.svg" alt="" />
+        .app-footer__item__text О нас
+    
+    router-link(:to="{path: '/profile'}")
+      .app-footer__item
+        <img svg-inline class="app-footer__item__icon" :src="../assets/footer/profile.svg" alt="" />
+        .app-footer__item__text Профиль
+
+    router-link(:to="{path: '/cart'}")
+      .app-footer__item
+        <img svg-inline class="app-footer__item__icon" :src="../assets/footer/cart.svg" alt="" />
+        .app-footer__item__text Корзина
 </template>
 
 <script>
-import AppFooterItem from "@/components/layout/AppFooterItem";
 let nextFooterItemId = 0;
 
 export default {
-  components: {
-    AppFooterItem
-  },
   data() {
-    return {
-      footerItems: [
-        {
-          id: nextFooterItemId++,
-          text: "Меню",
-          href: "/"
-        },
-        {
-          id: nextFooterItemId++,
-          text: "Любимое",
-          href: "/favourite"
-        },
-        {
-          id: nextFooterItemId++,
-          text: "О нас",
-          href: "/about"
-        },
-        {
-          id: nextFooterItemId++,
-          text: "Профиль",
-          href: "/profile"
-        },
-        {
-          id: nextFooterItemId++,
-          text: "Корзина",
-          href: "/cart"
-        }
-      ]
-    };
+    return {};
   }
 };
 </script>
 <style scoped  lang="scss">
 .app-footer {
-  position: fixed;
-
-  top: calc(100vh - 83px);
+  position: sticky;
   bottom: 0;
   width: 100vw;
   padding: 8px 0 30px;
@@ -59,6 +49,28 @@ export default {
   z-index: 9999;
   & > * {
     flex: 1 100%;
+  }
+  .router-link-exact-active {
+    .app-footer__item {
+      color: var(--color);
+    }
+  }
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-muted);
+
+    &__icon {
+      height: 34px;
+      line-height: 41px;
+      margin-bottom: 2px;
+    }
+    &__text {
+      font-size: var(--font-size-footer);
+      text-align: center;
+    }
   }
 }
 </style>

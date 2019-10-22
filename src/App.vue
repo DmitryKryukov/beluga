@@ -18,6 +18,7 @@ export default {
 </script>
 <style src="./styles/global.scss" lang="scss"></style>
 <style scoped lang="scss">
+/*
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -39,4 +40,5 @@ export default {
   transform: translateX(-100vw);
   opacity: 0;
 }
+*/
 </style>
