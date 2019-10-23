@@ -25,7 +25,7 @@ export default {
         scrollerLock: true,
         page: {
           width: 0,
-          current: 1,
+          current: 0,
           currentApprox: 1,
           count: 0
         },
@@ -84,7 +84,6 @@ export default {
       this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[1];
       this.pager.indicator.startWidth = this.pager.tabLinks.widths[0];
       this.pager.indicator.goalWidth = this.pager.tabLinks.widths[1];
-
       this.changePageHeight(0);
     },
 
@@ -92,7 +91,7 @@ export default {
       const footerHeight = 85;
       const pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
 
-      let currentPageHeight = pagerItems[num].childNodes[0].clientHeight + 20; //20 — нижний паддинг пейджа;
+      let currentPageHeight = pagerItems[num].childNodes[0].clientHeight + 40; //20 — нижний паддинг пейджа;
       let minPageHeight =
         document.documentElement.clientHeight -
         footerHeight -
