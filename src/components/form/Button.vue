@@ -21,7 +21,6 @@ export default {
   mounted() {},
   methods: {
     btnClick: function(event) {
-      console.log(event.target);
       ripple(event);
       function ripple(e) {
         const rect = {

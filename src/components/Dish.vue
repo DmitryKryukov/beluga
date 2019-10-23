@@ -2,7 +2,7 @@
   #page
     //AppHeader(name="Карточка")
     section.dish
-    .dish-header
+    .dish__header
       .dish-photo
     .dish-name Хе из щуки
     .dish-info

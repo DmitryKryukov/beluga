@@ -2,7 +2,7 @@
   #app
     .main-wrapper
       transition(name="slide")
-        router-view
+        router-view(@nextView = "viewScroll")
     AppFooter(@nextView = "viewScroll")
 </template>
 

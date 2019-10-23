@@ -1,11 +1,15 @@
 <template lang="pug">
-  router-link(:to = "'/dish/' + dish.id")
-    .dish-card(@click = "cardClick")
-      .dish-card__photo
-      h2.dish-card__name {{dish.name}}
+    //router-link(:to = "'/dish/' + dishData.id" )
+    .dish-card(@click.stop="goToDishView")
+      header.dish-card__header
+        .dish-card__header__favourite(ref="favourite"  @click.stop="addToFavourite" :class="{'dish-card__header__favourite--active': dishData.favourite}")
+         
+          <img svg-inline :src="../assets/footer/favourite.svg" alt=""/>
+        .dish-card__header__photo
+      h2.dish-card__name {{dishData.name}}
       footer.dish-card__footer
         span.dish-card__footer__aside(v-if = "dish.aside") {{dish.aside}}
-        button.dish-card__footer__btn(@click.prevent.stop = "addToCart") {{dish.price}}
+        button.dish-card__footer__btn {{dish.price}}
 </template>
 
 <script>
@@ -16,9 +20,40 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      dishData: {}
+    };
+  },
+  mounted() {
+    this.dishData = this.dish;
+  },
   methods: {
-    cardClick() {},
-    addToCart() {}
+    goToDishView() {
+      this.$emit("nextView", window.pageYOffset);
+    },
+    addToFavourite() {
+      this.dishData.favourite = !this.dishData.favourite;
+      ripple(event, this.$refs.favourite);
+      function ripple(e, el) {
+        const rect = {
+          top: el.getBoundingClientRect().top + el.offsetParent.scrollTop,
+          left: el.getBoundingClientRect().left + el.offsetParent.scrollLeft
+        };
+        var clickPosition = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+        var ripple = document.createElement("div");
+        ripple.className = "rippler";
+        ripple.style.left = clickPosition.x - 5 + "px";
+        ripple.style.top = clickPosition.y - 5 + "px";
+        el.appendChild(ripple);
+        ripple.addEventListener("animationend", function() {
+          ripple.remove();
+        });
+      }
+    }
   }
 };
 </script>
@@ -32,13 +67,44 @@ export default {
   overflow: hidden;
   position: relative;
   transition: all 1s;
-
-  &__photo {
-    pointer-events: none;
-    background-image: var(--grad-placeholder);
-    background-color: #3c3f43;
-    width: 100%;
-    padding-bottom: 68.452%;
+  &__header {
+    &__photo {
+      pointer-events: none;
+      background-image: var(--grad-placeholder);
+      background-color: #3c3f43;
+      width: 100%;
+      padding-bottom: 68.452%;
+    }
+    &__favourite {
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      height: 1.5rem;
+      width: 2rem;
+      height: 2rem;
+      color: transparent;
+      stroke: var(--color-muted);
+      stroke-width: 0.1rem;
+      overflow: hidden;
+      border-radius: 50%;
+      z-index: 2;
+      transition: color 0.3s var(--ease), stroke-width 0.3s var(--ease),
+        transform 0.3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        width: 80%;
+        margin-top: 2px;
+      }
+      &:active {
+        transform: scale(1.3);
+      }
+      &--active {
+        color: var(--color);
+        stroke-width: 0;
+      }
+    }
   }
   &__name {
     pointer-events: none;
@@ -69,5 +135,20 @@ export default {
       @include btn();
     }
   }
+}
+/deep/ .rippler {
+  @keyframes ripplerScale {
+    from {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    to {
+      transform: scale(10);
+      opacity: 0;
+    }
+  }
+  width: 10px;
+  height: 10px;
+  animation: ripplerScale 1s cubic-bezier(0.42, 0, 0.58, 1);
 }
 </style>

@@ -24,7 +24,8 @@ export default {
         id: 0,
         name: "Котлета из щуки с пюре",
         aside: "320\xa0г",
-        price: "+\xa0295\xa0₽"
+        price: "+\xa0295\xa0₽",
+        favourite: true
       }
     };
   }
