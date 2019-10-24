@@ -12,7 +12,7 @@ export default {
           name: "Лопатка ягнёнка",
           aside: "320\xa0г",
           price: "+\xa01279\xa0₽",
-          favourite: true
+          favourite: false
         },
         {
           id: nextDishId++,
@@ -51,7 +51,7 @@ export default {
         },
         {
           id: nextDishId++,
-          name: "Пельмен с\xa0говядиной",
+          name: "Пельмени с\xa0говядиной",
           aside: "320\xa0г",
           price: "+\xa0317\xa0₽",
           favourite: false
@@ -72,14 +72,14 @@ export default {
         },
         {
           id: nextDishId++,
-          name: "Говяжий язык с птитимом",
+          name: "Говяжий язык с\xa0птитимом",
           aside: "320\xa0г",
           price: "+\xa0465\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
-          name: "Голень индейки с гречотто",
+          name: "Голень индейки с\xa0гречотто",
           aside: "320\xa0г",
           price: "+\xa0518\xa0₽",
           favourite: false
@@ -120,7 +120,7 @@ export default {
       dishes: [
         {
           id: nextDishId++,
-          name: "Котлета из щуки с пюре",
+          name: "Котлета из щуки с\xa0пюре",
           aside: "320\xa0г",
           price: "+\xa0295\xa0₽",
           favourite: false
@@ -220,13 +220,5 @@ export default {
     }
   ],
   cart: [],
-  favourite: [
-    {
-      id: 0,
-      name: "Лопатка ягнёнка",
-      aside: "320\xa0г",
-      price: "+\xa01279\xa0₽",
-      favourite: true
-    }
-  ]
+  favourite: []
 };

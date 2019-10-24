@@ -56,7 +56,7 @@ export default {
   mounted() {
     this.init();
     this.getNextIndicatorProps(0);
-    this.categoryChanged(1, 2);
+    this.categoryChanged(1);
   },
   methods: {
     init() {
@@ -127,7 +127,13 @@ export default {
     },
 
     categoryChanged(newVal, oldVal) {
-      this.tabs[oldVal - 1].active = false;
+      if (oldVal) {
+        this.tabs[oldVal - 1].active = false;
+      } else {
+        this.tabs.forEach(tab => {
+          tab.active = false;
+        });
+      }
       this.tabs[newVal - 1].active = true;
     },
 

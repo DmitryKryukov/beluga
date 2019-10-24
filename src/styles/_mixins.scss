@@ -31,3 +31,16 @@
   font-family: inherit;
   font-feature-settings: "pnum" on, "lnum" on, "case" on, "ss01" on;
 }
+@mixin heading() {
+  font-size: 1.5rem;
+}
+@mixin body() {
+  font-size: 1rem;
+  line-height: 24px;
+}
+@mixin caption() {
+  @include uppercase();
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  letter-spacing: 0.2em;
+}
