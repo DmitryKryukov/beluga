@@ -1,6 +1,6 @@
 <template lang="pug">
     //router-link(:to = "'/dish/' + dishData.id" )
-    .dish-card(@click.stop="goToDishView")
+    .dish-card(@click.stop="goToDishView" ref="card")
       header.dish-card__header
         .dish-card__header__favourite(ref="favourite"  @click.stop="addToFavourite" :class="{'dish-card__header__favourite--active': dishData.favourite}")
          
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import store from "@/store/store";
+
 export default {
   props: {
     dish: {
@@ -22,7 +24,8 @@ export default {
   },
   data() {
     return {
-      dishData: {}
+      dishData: {},
+      store
     };
   },
   mounted() {
@@ -52,6 +55,24 @@ export default {
         ripple.addEventListener("animationend", function() {
           ripple.remove();
         });
+      }
+      if (this.dishData.favourite) {
+        this.store.favourite.push(this.dishData);
+      } else {
+        let i = 0;
+        this.store.favourite.forEach(function(item) {
+          if (item.id == this.dishData.id) {
+            if (this.$route.path === "/favourite") {
+              this.$refs.card.style.opacity = 0;
+              this.$refs.card.style.marginBottom =
+                "-" + this.$refs.card.clientHeight - 9 + "px";
+              store.favourite.splice(i, 1);
+            } else {
+              store.favourite.splice(i, 1);
+            }
+          }
+          i += 1;
+        }, this);
       }
     }
   }

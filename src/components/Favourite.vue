@@ -3,15 +3,15 @@
     AppHeader(title="Любимое")
     section.row
      .col 
-        DishCard(:dish="dishMock")
-        DishCard(:dish="dishMock")
+        DishCard(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
      .col
-        DishCard(:dish="dishMock")
+        DishCard(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
  </template>
 
 <script>
 import AppHeader from "@/components/layout/AppHeader";
 import DishCard from "@/components/dishes/DishCard";
+import store from "@/store/store";
 
 export default {
   components: {
@@ -20,24 +20,32 @@ export default {
   },
   data() {
     return {
-      dishMock: {
-        id: 0,
-        name: "Котлета из щуки с пюре",
-        aside: "320\xa0г",
-        price: "+\xa0295\xa0₽",
-        favourite: true
-      }
+      store
     };
+  },
+  methods: {
+    goToDishView() {
+      this.$emit("nextView", window.pageYOffset);
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-section {
-  padding-top: 20px;
-}
 /deep/ .dish-card {
   //Добавляем поле между карточками блюд
+  margin-top: var(--view-gap);
   margin-bottom: var(--view-gap);
+}
+.col:first-of-type {
+  & > *:nth-child(even) {
+    display: none;
+  }
+}
+
+.col:last-of-type {
+  & > *:nth-child(odd) {
+    display: none;
+  }
 }
 </style>

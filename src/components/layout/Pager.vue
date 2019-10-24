@@ -56,6 +56,7 @@ export default {
   mounted() {
     this.init();
     this.getNextIndicatorProps(0);
+    this.categoryChanged(1, 2);
   },
   methods: {
     init() {
