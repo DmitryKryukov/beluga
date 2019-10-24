@@ -27,10 +27,6 @@ hr {
 }
 
 //СЕТКА
-#page {
-  box-sizing: border-box;
-  padding-bottom: var(--view-margin);
-}
 .row {
   display: flex;
   margin-left: calc(var(--view-margin) - var(--view-half-gap));

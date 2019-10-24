@@ -13,7 +13,7 @@
           .col 
             DishCard(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="goToDishView")
           .col
-            DishCard(v-for="dish in category.dishes", :key="dish.id", :dish="dish")
+            DishCard(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="goToDishView")
  </template>
 
 <script>
@@ -275,31 +275,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//Два селектора ниже скрывает каждый второй элемент в колонке
+/deep/ .dish-card {
+  //Добавляем поле между карточками блюд
+  margin-top: var(--view-gap);
+  margin-bottom: var(--view-gap);
+}
 .col:first-of-type {
   & > *:nth-child(even) {
-    //todo Перенести в компьютед
     display: none;
   }
-  a:not(:last-child) {
-    /deep/ .dish-card {
-      //Добавляем поле между карточками блюд
-      margin-bottom: var(--view-gap);
-    }
-  }
 }
+
 .col:last-of-type {
   & > *:nth-child(odd) {
-    //todo Перенести в компьютед
     display: none;
   }
-  a:not(:last-child) {
-    /deep/ .dish-card {
-      //Добавляем поле между карточками блюд
-      margin-bottom: var(--view-gap);
-    }
-  }
 }
+
 .scroller--discount {
   padding-bottom: 21px;
 }

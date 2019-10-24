@@ -29,6 +29,10 @@
             DiscountCard
             DiscountCard
             DiscountCard
+      section
+        .row
+          .col
+            .test
  </template>
 
 <script>
@@ -78,5 +82,9 @@ export default {
 }
 .discount-card:not(:last-child) {
   margin-bottom: var(--view-gap);
+}
+.test {
+  height: 2000px;
+  background-color: red;
 }
 </style>

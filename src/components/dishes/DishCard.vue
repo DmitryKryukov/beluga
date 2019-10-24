@@ -109,7 +109,7 @@ export default {
   &__name {
     pointer-events: none;
     font-size: var(--font-size-heading);
-    margin: 10px 13px 53px;
+    margin: 10px 13px;
     line-height: 20px;
   }
   &__footer {

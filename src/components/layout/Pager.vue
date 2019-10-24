@@ -2,15 +2,15 @@
   .wrapper
     nav.scroller.scroller--nogap(ref = "scroller")
       a.scroller__link(v-for = "tab in tabs", :key = "tab.id", :class = "{'scroller__link--active' : tab.active}" @click = "categoryClick(tab.id)") {{tab.name}}
-      .scroller__indicator(ref = "indicator", :style = "'left:' +(pager.indicator.startLeft  + pager.indicator.relScroll * (pager.indicator.goalLeft - pager.indicator.startLeft))+'px; width:' + (pager.indicator.startWidth  + pager.indicator.relScroll * (pager.indicator.goalWidth - pager.indicator.startWidth))+'px;'")
-
+      .scroller__indicator(ref = "indicator", :style = "'left:' + (scroller.indicator.startLeft  + scroller.indicator.relScroll * (scroller.indicator.goalLeft - scroller.indicator.startLeft))+'px; width:' + (scroller.indicator.startWidth  + scroller.indicator.relScroll * (scroller.indicator.goalWidth - scroller.indicator.startWidth))+'px;'")
     main.pager(ref = "pager", @scroll = "pagerScroll", v-touch:start = "pagerTouch")
       slot
  </template>
 
 <script>
-let indicatorMargin = 0;
-
+const indicatorMargin = 0;
+const footerHeight = 85;
+let self = {};
 export default {
   props: {
     tabs: {
@@ -20,112 +20,108 @@ export default {
   data() {
     return {
       pager: {
+        el: {},
         top: 0,
         innerWidth: 0,
-        scrollerLock: true,
-        page: {
+        pages: {
+          els: {},
           width: 0,
           current: 0,
           currentApprox: 1,
           count: 0
+        }
+      },
+      scroller: {
+        el: {},
+        height: 0,
+        top: 0,
+        lock: true,
+        tabLinks: {
+          els: [],
+          lefts: [],
+          widths: []
         },
         indicator: {
+          el: {},
           startLeft: 0,
           currentLeft: 0,
           goalLeft: 0,
           startWidth: 0,
           goalWidth: 0,
           relScroll: 0
-        },
-        tabLinks: {
-          el: [],
-          lefts: [],
-          widths: []
         }
       }
     };
   },
   mounted() {
     this.init();
+    this.getNextIndicatorProps(0);
   },
   methods: {
     init() {
-      //Вызывается onMounted, инициализируем настройки пейджера
-      //Добавляет вложенным элментам класс pager__item
+      //Инициализируем скроллер
+      this.scroller.el = this.$refs.scroller;
+      this.scroller.height = this.scroller.el.offsetHeight;
+      this.scroller.top = this.scroller.el.offsetTop;
+      this.scroller.tabLinks.els = this.scroller.el.childNodes;
+      this.scroller.tabLinks.els.forEach(function(tabLink) {
+        this.scroller.tabLinks.lefts.push(tabLink.offsetLeft + indicatorMargin);
+        this.scroller.tabLinks.widths.push(
+          tabLink.offsetWidth - indicatorMargin * 2
+        );
+      }, this);
+      this.scroller.indicator.el = this.$refs.indicator;
 
-      let pages = this.$refs.pager.childNodes;
-      pages.forEach(function(page) {
+      //Инициализируем пейджер
+      this.pager.el = this.$refs.pager;
+      this.pager.pages.els = this.pager.el.childNodes;
+      this.pager.pages.els.forEach(function(page) {
         page.classList.add("pager__item");
-      });
+        page.style.minHeight =
+          window.innerHeight - footerHeight - this.scroller.height + "px";
+      }, this);
+      this.pager.innerWidth = this.pager.el.scrollWidth;
+      this.pager.top = this.pager.el.offsetTop;
+      this.pager.pages.width = window.innerWidth;
+      this.pager.pages.count = this.pager.pages.els.length;
+      this.pager.pages.current = 1;
+      this.pager.pages.currentApprox = 1;
+    },
 
-      //Инициализируем настройки пейджера
-      this.pager.innerWidth = this.$refs.pager.scrollWidth; //Внутренняя область пейджера в пикселях
-      this.pager.page.width = window.innerWidth; //Размер окна в пикселях
-      this.pager.top = this.$refs.pager.offsetTop - 20; //Верхняя точка пейджера
-
-      this.pager.page.count = pages.length; //Количество страниц в пейджере
-      this.pager.page.current = 1; //При инициализации указываем 1 страницу, как текущую. Переключается при полном переходе на страницу (по ceil)
-      this.pager.page.currentApprox = 1; //При инициализации указываем 1 страницу, как текущую. Переключается при частичном переходе на страницу (по round)
-
-      //Получаем все объекты в скроллере и сохраняем их ширину и позицию по горизонтали
-      let tabLinks = {
-        el: this.$refs.scroller.childNodes,
-        lefts: [],
-        widths: []
-      };
-      tabLinks.el.forEach(function(tabLink) {
-        tabLinks.lefts.push(tabLink.offsetLeft + indicatorMargin); //список содержит x-координату элементов в скроллере
-        tabLinks.widths.push(tabLink.offsetWidth - indicatorMargin * 2); //список содержит ширину элементов в скроллере
-      });
-      this.pager.tabLinks = tabLinks;
-
-      //Инициализируем настройки индикатора
-      this.pager.indicator.startLeft = this.pager.tabLinks.lefts[0];
-      this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[1];
-      this.pager.indicator.startWidth = this.pager.tabLinks.widths[0];
-      this.pager.indicator.goalWidth = this.pager.tabLinks.widths[1];
-      this.changePageHeight(0);
+    getNextIndicatorProps(num) {
+      this.scroller.indicator.startLeft = this.scroller.tabLinks.lefts[num];
+      this.scroller.indicator.goalLeft = this.scroller.tabLinks.lefts[num + 1];
+      this.scroller.indicator.startWidth = this.scroller.tabLinks.widths[num];
+      this.scroller.indicator.goalWidth = this.scroller.tabLinks.widths[
+        num + 1
+      ];
     },
 
     changePageHeight(num = 0) {
-      const footerHeight = 85;
-      const pagerItems = this.$refs.pager.childNodes; //Выбираем все страницы
-
-      let currentPageHeight = pagerItems[num].childNodes[0].clientHeight + 40; //20 — нижний паддинг пейджа;
-      let minPageHeight =
-        document.documentElement.clientHeight -
-        footerHeight -
-        //this.pager.top - todo подумать над универсальным поведением
-        60;
-      let newPageHeight = Math.max(minPageHeight, currentPageHeight);
-
-      this.$refs.pager.style.height = newPageHeight + "px";
-      this.$refs.pager.style.overflowY = "hidden";
+      this.pager.el.style.maxHeight =
+        this.pager.pages.els[num].offsetHeight + "px";
       this.resetPageMargin();
     },
-    resetPageMargin() {
-      let pagerItems = this.$refs.pager.childNodes; //todo Вынести в настройки Выбираем все страницы
-      pagerItems.forEach(function(pagerItem) {
-        pagerItem.style.marginTop = 0;
-      });
 
-      if (window.scrollY > this.pager.top) {
-        window.scrollTo(0, this.pager.top - 25);
-      }
+    resetPageMargin() {
+      this.pager.pages.els.forEach(function(page) {
+        page.style.marginTop = 0;
+      });
     },
-    handleIndicatorSmooth(pagerScroll) {
-      this.pager.indicator.relScroll =
-        (pagerScroll / this.pager.innerWidth) * this.pager.page.count +
+
+    handleIndicatorSmooth(pagerScrollPosition) {
+      this.scroller.indicator.relScroll =
+        (pagerScrollPosition / this.pager.innerWidth) * this.pager.pages.count +
         1 -
-        this.pager.page.current;
+        this.pager.pages.current;
     },
 
     scrollerScroll() {
-      if (this.pager.scrollerLock) {
-        this.$refs.scroller.scrollLeft =
-          this.$refs.indicator.offsetLeft -
-          this.pager.page.width / 2 +
-          this.$refs.indicator.offsetWidth / 2;
+      if (this.scroller.lock) {
+        this.scroller.el.scrollLeft =
+          this.scroller.indicator.el.offsetLeft -
+          this.pager.pages.width / 2 +
+          this.scroller.indicator.el.offsetWidth / 2;
       }
     },
 
@@ -134,11 +130,11 @@ export default {
       this.tabs[newVal - 1].active = true;
     },
 
-    categoryClick(pageNumber) {
-      this.pager.scrollerLock = false;
-      this.$refs.pager.scrollLeft = this.pager.page.width * pageNumber;
+    categoryClick(pageNum) {
+      this.scroller.lock = false;
+      this.pager.el.scrollLeft = this.pager.pages.width * pageNum;
 
-      ripple(event, this.$refs.scroller);
+      ripple(event);
 
       function ripple(e) {
         const rect = {
@@ -147,16 +143,15 @@ export default {
             e.target.offsetParent.scrollTop,
           left: e.target.getBoundingClientRect().left
         };
-        var clickPosition = {
+        let clickPosition = {
           x: e.clientX - rect.left,
           y: e.clientY - rect.top
         };
-        var ripple = document.createElement("div");
 
+        let ripple = document.createElement("div");
         ripple.className = "rippler";
-
-        ripple.style.left = clickPosition.x + "px";
-        ripple.style.top = clickPosition.y + "px";
+        ripple.style.left = clickPosition.x - 5 + "px";
+        ripple.style.top = clickPosition.y - 5 + "px";
         e.target.appendChild(ripple);
 
         ripple.addEventListener("animationend", function() {
@@ -166,50 +161,45 @@ export default {
     },
 
     pagerScroll() {
-      let pagerScroll = this.$refs.pager.scrollLeft;
+      let pagerScrollPosition = this.pager.el.scrollLeft;
       let relPage =
-        (pagerScroll / this.pager.innerWidth) * this.pager.page.count + 1;
+        (pagerScrollPosition / this.pager.innerWidth) * this.pager.pages.count +
+        1;
 
-      this.pager.page.current = Math.floor(relPage);
-      this.pager.page.currentApprox = Math.round(relPage);
-      this.handleIndicatorSmooth(pagerScroll);
+      this.pager.pages.current = Math.floor(relPage);
+      this.pager.pages.currentApprox = Math.round(relPage);
 
+      this.handleIndicatorSmooth(pagerScrollPosition);
       this.scrollerScroll();
-
       this.neighbourPageSet();
     },
 
     pagerTouch() {
-      this.pager.scrollerLock = true;
+      this.scroller.lock = true;
     },
 
     neighbourPageSet() {
-      this.$refs.pager.style.height = "auto";
-      this.$refs.pager.style.overflowY = "visible";
-      if (window.scrollY > this.pager.top) {
-        let nextPage = this.$refs.pager.childNodes[this.pager.page.current];
-        let prevPage = this.$refs.pager.childNodes[this.pager.page.current - 2];
-
+      if (window.scrollY > this.scroller.top) {
+        let nextPage = this.pager.pages.els[this.pager.pages.current];
+        let prevPage = this.pager.pages.els[this.pager.pages.current - 2];
+        //todo если скроллим вправо, то менять nextPage, если влево — prevPage
         if (nextPage) {
           nextPage.style.marginTop =
-            window.pageYOffset - this.pager.top + 25 + "px";
+            window.pageYOffset - this.pager.top + this.scroller.height + "px";
         }
         if (prevPage) {
           prevPage.style.marginTop =
-            window.pageYOffset - this.pager.top + 25 + "px";
+            window.pageYOffset - this.pager.top + 48 + "px";
         }
       }
     }
   },
   watch: {
-    "pager.page.current": function(newVal, oldVal) {
-      this.pager.indicator.startLeft = this.pager.tabLinks.lefts[newVal - 1];
-      this.pager.indicator.goalLeft = this.pager.tabLinks.lefts[newVal];
-      this.pager.indicator.startWidth = this.pager.tabLinks.widths[newVal - 1];
-      this.pager.indicator.goalWidth = this.pager.tabLinks.widths[newVal];
+    "pager.pages.current": function(newVal, oldVal) {
+      this.getNextIndicatorProps(newVal - 1);
       this.changePageHeight(newVal - 1);
     },
-    "pager.page.currentApprox": function(newVal, oldVal) {
+    "pager.pages.currentApprox": function(newVal, oldVal) {
       this.categoryChanged(newVal, oldVal);
     }
   }
@@ -219,23 +209,18 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/mixins";
 .pager {
-  scroll-snap-type: x mandatory;
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
   overflow-x: scroll;
+  overflow-y: hidden;
   max-width: calc(100vw + var(--view-margin));
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   align-items: flex-start;
-  overflow-y: hidden;
   &__item {
-    padding-top: 20px;
     width: 100%;
     min-width: 100vw;
-    min-height: calc(100vh - 158px);
-    overflow: auto;
-    position: sticky;
-    top: 0;
     scroll-snap-align: start;
   }
 }
