@@ -4,23 +4,23 @@
       .row
         .col
           .dish__header
-            .dish__header__favourite(@click = "addToFavourite")
+            .dish__header__favourite(ref="favourite", @click = "addToFavourite")
               <img svg-inline src="./assets/footer/favourite.svg">
             router-link(:to = "{path: '/'}" )
               .dish__header__cross(@click = "prevView")
                 <img svg-inline src="./assets/cross white thin.svg">              
             .dish__header__photo
           .dish__info
-            .dish__info__name Лопатка ягнёнка
+            .dish__info__name {{ dish.name }}
             .row
-              .dish__info__category Мясо
-              .dish__info__aside 250 г
+              .dish__info__category {{category.name}}
+              .dish__info__aside {{ dish.aside }}
             .dish__info__caption Ингредиенты
             .dish__info__ingredient Филе щуки, морковь, лук репчатый, чёрный перец, красный перец, соль
           .toast.toast--enter(ref="toast")
             .toast__text Добавлено в корзину
           footer.dish__footer
-            DishButton(text="1279 ₽", @addToCart = "addToCart").dish__footer__btn
+            DishButton(:text="dish.price", @addToCart = "addToCart").dish__footer__btn
     
  </template>
 
@@ -36,10 +36,29 @@ export default {
   },
   data() {
     return {
-      cartQuantity: 0
+      cartQuantity: 0,
+      dish: {},
+      category: {}
     };
   },
-  computed: {},
+  mounted: function() {
+    let find = false;
+    store.categories.forEach(category => {
+      category.dishes.forEach(dish => {
+        if (dish.id == this.$route.params.id) {
+          this.dish = dish;
+          find = true;
+        }
+      });
+      if (find) {
+        this.category = category;
+        find = false;
+      }
+    });
+    if (this.dish.favourite) {
+      this.$refs.favourite.classList.add("dish__header__favourite--active");
+    }
+  },
   methods: {
     addToFavourite() {
       event.target.classList.toggle("dish__header__favourite--active");
@@ -91,6 +110,7 @@ export default {
           ripple.remove();
         });
       }
+      document.documentElement.style.setProperty("--scrollYView", 0);
     },
     addToCart() {
       if (this.$refs.toast.classList.contains("toast--enter")) {
@@ -118,13 +138,12 @@ export default {
 @import "../styles/mixins";
 .dish {
   &__header {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
+    width: calc(100% + var(--view-margin) * 2);
+    margin-left: calc(var(--view-margin) * -1);
+    margin-right: calc(var(--view-margin) * -1);
+    margin-bottom: 0;
     &__photo {
-      height: 250px;
+      height: 255px;
       background: var(--grad-placeholder);
     }
     &__cross {
@@ -179,7 +198,6 @@ export default {
     }
   }
   &__info {
-    margin-top: 250px;
     padding-top: 20px;
     &__name {
       @include heading;
@@ -187,7 +205,7 @@ export default {
     }
     .row {
       justify-content: space-between;
-      margin: var(--view-margin) 0 45px;
+      margin: 20px 0 45px;
     }
     &__category {
       @include uppercase;

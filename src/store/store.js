@@ -11,105 +11,105 @@ export default {
           id: nextDishId++,
           name: "Лопатка ягнёнка",
           aside: "320\xa0г",
-          price: "+\xa01279\xa0₽",
+          price: "1279\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Бефстроганов с\xa0пюре",
           aside: "320\xa0г",
-          price: "+\xa0413\xa0₽",
+          price: "413\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Свиная рулька с\xa0тушёной капустой",
           aside: "320\xa0г",
-          price: "+\xa0582\xa0₽",
+          price: "582\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Говяжьи щёчки с\xa0пюре из\xa0корня сельдерея",
           aside: "320\xa0г",
-          price: "+\xa0980\xa0₽",
+          price: "980\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Бифштекс из\xa0баранины",
           aside: "320\xa0г",
-          price: "+\xa0465\xa0₽",
+          price: "465\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Ребра говяжьи",
           aside: "320\xa0г",
-          price: "+\xa01279\xa0₽",
+          price: "1279\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Пельмени с\xa0говядиной",
           aside: "320\xa0г",
-          price: "+\xa0317\xa0₽",
+          price: "317\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Баранья нога",
           aside: "320\xa0г",
-          price: "+\xa03695\xa0₽",
+          price: "3695\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Рубленый стейк из\xa0мраморной говядины",
           aside: "320\xa0г",
-          price: "+\xa0769\xa0₽",
+          price: "769\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Говяжий язык с\xa0птитимом",
           aside: "320\xa0г",
-          price: "+\xa0465\xa0₽",
+          price: "465\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Голень индейки с\xa0гречотто",
           aside: "320\xa0г",
-          price: "+\xa0518\xa0₽",
+          price: "518\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Свиная корейка",
           aside: "320\xa0г",
-          price: "+\xa0553\xa0₽",
+          price: "553\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Жареный цыплёнок",
           aside: "320\xa0г",
-          price: "+\xa0365\xa0₽",
+          price: "365\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Жаркое из\xa0говядины",
           aside: "320\xa0г",
-          price: "+\xa0370\xa0₽",
+          price: "370\xa0₽",
           favourite: false
         },
         {
           id: nextDishId++,
           name: "Рагу из\xa0баранины",
           aside: "320\xa0г",
-          price: "+\xa0370\xa0₽",
+          price: "370\xa0₽",
           favourite: false
         }
       ]
@@ -122,7 +122,7 @@ export default {
           id: nextDishId++,
           name: "Котлета из щуки с\xa0пюре",
           aside: "320\xa0г",
-          price: "+\xa0295\xa0₽",
+          price: "295\xa0₽",
           favourite: false
         }
       ]
@@ -135,7 +135,7 @@ export default {
           id: nextDishId++,
           name: "Овощной салат",
           aside: "320\xa0г",
-          price: "+\xa0265\xa0₽",
+          price: "265\xa0₽",
           favourite: false
         }
       ]
@@ -148,7 +148,7 @@ export default {
           id: nextDishId++,
           name: "Бостонский чаудер",
           aside: "320\xa0г",
-          price: "+\xa0286\xa0₽",
+          price: "286\xa0₽",
           favourite: false
         }
       ]
@@ -161,7 +161,7 @@ export default {
           id: nextDishId++,
           name: "Брокколи в сливочном соусе",
           aside: "320\xa0г",
-          price: "+\xa0190\xa0₽",
+          price: "190\xa0₽",
           favourite: false
         }
       ]
@@ -174,7 +174,7 @@ export default {
           id: nextDishId++,
           name: "Аджика",
           aside: "50\xa0мл",
-          price: "+\xa079\xa0₽",
+          price: "79\xa0₽",
           favourite: false
         }
       ]
@@ -187,7 +187,7 @@ export default {
           id: nextDishId++,
           name: "Хлебная корзина",
           aside: "50\xa0мл",
-          price: "+\xa0128\xa0₽",
+          price: "128\xa0₽",
           favourite: false
         }
       ]
@@ -200,7 +200,7 @@ export default {
           id: nextDishId++,
           name: "Чизкейк манго и маракуйя",
           aside: "50\xa0мл",
-          price: "+\xa0275\xa0₽",
+          price: "275\xa0₽",
           favourite: false
         }
       ]
@@ -213,7 +213,7 @@ export default {
           id: nextDishId++,
           name: "Американо",
           aside: "200\xa0мл",
-          price: "+\xa0116\xa0₽",
+          price: "116\xa0₽",
           favourite: false
         }
       ]

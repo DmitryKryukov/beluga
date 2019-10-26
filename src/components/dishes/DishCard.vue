@@ -9,7 +9,7 @@
         h2.dish-card__name(@click = "goToDishView") {{dishData.name}}
         footer.dish-card__footer(@click = "goToDishView")
           span.dish-card__footer__aside(v-if = "dish.aside") {{dish.aside}}
-          button.dish-card__footer__btn {{dish.price}}
+          button.dish-card__footer__btn + {{dish.price}}
 </template>
 
 <script>

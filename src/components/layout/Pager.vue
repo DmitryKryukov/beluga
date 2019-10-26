@@ -108,6 +108,9 @@ export default {
       this.pager.pages.els.forEach(function(page) {
         page.style.marginTop = 0;
       });
+      if (window.scrollY > this.pager.top - 48) {
+        window.scrollTo(window.X, this.pager.top - 48);
+      }
     },
 
     handleIndicatorSmooth(pagerScrollPosition) {

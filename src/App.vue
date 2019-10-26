@@ -32,6 +32,7 @@ export default {
 .slide-enter-active,
 .slide-leave-active {
   position: fixed;
+  top: 0;
   width: 100vw;
   height: 100vh;
   transition: all 0.3s var(--ease);
