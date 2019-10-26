@@ -113,8 +113,8 @@ export default {
       document.documentElement.style.setProperty("--scrollYView", 0);
     },
     addToCart() {
+      this.cartQuantity++;
       if (this.$refs.toast.classList.contains("toast--enter")) {
-        this.cartQuantity++;
         this.$refs.toast.classList.remove("toast--enter");
         setTimeout(() => {
           this.$refs.toast.classList.add("toast--leave");
@@ -123,9 +123,8 @@ export default {
             this.$refs.toast.classList.add("toast--enter");
           }, 300);
         }, 1000);
-      } else {
-        this.cartQuantity++;
-        console.log(this.$refs.toast.childNodes[0].textContent);
+      }
+      if (this.cartQuantity > 1) {
         this.$refs.toast.childNodes[0].textContent =
           "Добавлено в корзину: " + this.cartQuantity;
       }

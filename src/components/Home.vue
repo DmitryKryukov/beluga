@@ -3,7 +3,7 @@
     AppHeader(title="Белуга")
       a(href="#").app-header__link Все акции →
     aside.scroller.scroller--discount.scroller--borderless
-      DiscountCard
+      DiscountCard(name="Бизнес-ланч за\xa0350\u2009₽ с\xa013:00 до\xa016:30", code="lunchbox")
       DiscountCard
       DiscountCard
       DiscountCard

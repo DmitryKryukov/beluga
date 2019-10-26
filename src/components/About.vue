@@ -16,17 +16,21 @@
   
   #page
     AppHeader(title="О нас")
-    Pager(:tabs = "[{id: 0, name: 'Контакты и залы'},{id: 1, name: 'Акции и промокоды'}]")
+    Pager(:tabs = "[{id: 0, name: 'Контакты'},{id: 1, name: 'Залы'},{id: 2, name: 'Акции и промокоды'}]")
       section
         .row
           .col
             +contact-group("Закажите доставку","&nbsp;99&nbsp;99&nbsp;27","+7&nbsp;8512")
             +contact-group("Забронируйте столик","&nbsp;99&nbsp;99&nbsp;28","+7&nbsp;8512")
             +contact-group("Находимся в центре города","Фиолетова, 3")
-            .map
-            Button(text="Инстаграмм")
+            .map            
+            //Button(text="Показать на карте")
+              img(slot = "prefix" src="./assets/about/icon__2Gis.svg" alt="").btn__prefix
+            Button(text="Инстаграм")
               img(slot = "prefix" src="./assets/about/icon__instagram.svg" alt="").btn__prefix
-            h2.caption Залы
+      section
+        .row
+          .col
             +area("Общий зал", 200)
             +area("Охотничийц зал", 15)
             +area("Зал Прикаспийских государств", 30)
@@ -35,7 +39,7 @@
       section
         .row
           .col
-            DiscountCard
+            DiscountCard(name="Бизнес-ланч за\xa0350\u2009₽ с\xa013:00 до\xa016:30", code="lunchbox")
             DiscountCard
             DiscountCard
             DiscountCard
@@ -107,15 +111,16 @@ export default {
   min-height: 128px;
   box-sizing: border-box;
   border-radius: var(--border-radius);
-  padding: var(--view-margin);
+  padding: 10px var(--view-margin) var(--view-margin);
+  margin-top: var(--view-margin);
   margin-bottom: var(--view-margin);
   display: flex;
   flex-direction: column;
   &__name {
-    margin-top: auto;
     line-height: 24px;
   }
   &__seat {
+    margin-top: auto;
     color: var(--color-muted);
   }
 }

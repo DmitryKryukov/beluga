@@ -64,8 +64,8 @@ export default {
         };
         var ripple = document.createElement("div");
         ripple.className = "rippler";
-        ripple.style.left = clickPosition.x + "px";
-        ripple.style.top = clickPosition.y + "px";
+        ripple.style.left = clickPosition.x - 5 + "px";
+        ripple.style.top = clickPosition.y - 5 + "px";
         e.target.parentNode.appendChild(ripple);
         ripple.addEventListener("animationend", function() {
           ripple.remove();
@@ -165,6 +165,7 @@ export default {
         height: 2px;
         transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
         &:after {
+          //todo переделать без псевдоэлементов
           left: calc(var(--inputIndicatorPosition) - 100%);
           right: calc(var(--inputIndicatorPosition) - 100%);
         }

@@ -101,6 +101,7 @@ export default {
     changePageHeight(num = 0) {
       this.pager.el.style.maxHeight =
         this.pager.pages.els[num].offsetHeight + "px";
+      this.pager.el.style.overflowY = "hidden";
       this.resetPageMargin();
     },
 
@@ -178,6 +179,8 @@ export default {
 
       this.pager.pages.current = Math.floor(relPage);
       this.pager.pages.currentApprox = Math.round(relPage);
+      this.pager.el.style.maxHeight = "none";
+      this.pager.el.style.overflowY = "visible";
 
       this.handleIndicatorSmooth(pagerScrollPosition);
       this.scrollerScroll();

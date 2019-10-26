@@ -31,7 +31,8 @@ export default {
   align-items: flex-start;
   flex-direction: column;
   box-sizing: border-box;
-  padding: var(--view-margin) var(--view-margin) 20px;
+  padding: 10px var(--view-margin) var(--view-margin);
+  mix-blend-mode: screen;
   &__name {
     line-height: 24px;
   }
@@ -41,15 +42,37 @@ export default {
   }
   &__code {
     margin-top: auto;
-    background-color: var(--color);
-    color: var(--bg);
     font-size: 0.8rem;
-    padding: 4.5px 7px 4.5px 9px;
+    padding: 4.5px 10px 4.5px 15px;
     border-radius: 2px;
-    //transform: skewY(-2deg);
     transform-origin: left bottom;
+    mix-blend-mode: screen;
     @include caption;
-    color: var(--bg);
+    background-color: var(--color-muted);
+    color: black;
+    font-weight: bold;
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 5px;
+      width: 1px;
+      //border-left: 1px dashed var(--color-muted);
+      border-left: 1px dashed black;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 4px);
+      right: -5px;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: black;
+    }
   }
 }
 </style>

@@ -29,7 +29,7 @@ export default {
     };
   },
   mounted: function() {
-    this.$refs.group.classList.add("__fadeOut");
+    //this.$refs.group.classList.add("__fadeOut");
     setTimeout(() => {
       this.Active = this.active;
       this.$refs.group.classList.remove("__fadeOut");
@@ -50,22 +50,30 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/mixins";
 .group {
-  height: 45px;
+  height: 50px;
   width: 100%;
+  margin-bottom: var(--view-margin) !important;
   transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   &.active {
-    height: 317px;
+    height: 310px;
+    box-sizing: content-box;
+    padding-bottom: var(--view-margin) !important;
     .group {
       &-title {
+        margin-bottom: var(--view-gap);
         &:after {
           transform: translateX(-2px) rotate(90deg);
         }
         &-text {
-          background-color: transparent;
+          min-width: calc(100% - var(--view-margin) * 3.3);
+          letter-spacing: 0.2em;
+          //background-color: #fff;
+          /* background-color: transparent;
           padding: 8px 29px 8px 14px;
           border-radius: var(--border-radius);
-          margin: -8px -33px -8px -14px;
+          margin: -8px -33px -8px -14px;*/
         }
       }
       &-content {
@@ -84,21 +92,24 @@ export default {
   }
   &-title {
     width: 100%;
-    margin-top: 20px;
     position: relative;
     display: flex;
+    align-items: center;
     transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-    max-height: 16px;
+    // max-height: 16px;
 
     &-text {
-      background-color: var(--color-muted-transparent);
-      padding: 8px 29px 8px 14px;
+      @include caption;
+      letter-spacing: 0.05em;
+      background-color: var(--color-muted);
+      color: black;
+      padding: 7px 10px;
       border-radius: var(--border-radius);
-      margin: -8px -33px -8px -2px;
       pointer-events: none;
       display: inline-block;
+      min-width: 30px;
       transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
-      overflow: hidden;
+      font-size: 1rem;
     }
 
     &-delete {
@@ -114,17 +125,19 @@ export default {
       margin-left: var(--view-gap);
       pointer-events: all;
       z-index: 999;
+      display: none;
     }
 
     &:after {
       content: "";
+      mix-blend-mode: difference;
       position: absolute;
       right: 0;
       background-image: url("../assets/arrow.svg");
       background-repeat: no-repeat;
       background-size: contain;
       width: 15px;
-      height: 100%;
+      height: 16px;
       transition: all 0.1s cubic-bezier(0.42, 0, 0.58, 1);
     }
   }

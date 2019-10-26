@@ -7,9 +7,9 @@
           .dish-card__header__photo(@click = "goToDishView")
       router-link(:to = "{path: '/dish/' + dishData.id}" )    
         h2.dish-card__name(@click = "goToDishView") {{dishData.name}}
-        footer.dish-card__footer(@click = "goToDishView")
-          span.dish-card__footer__aside(v-if = "dish.aside") {{dish.aside}}
+        footer.dish-card__footer(@click = "goToDishView")          
           button.dish-card__footer__btn + {{dish.price}}
+          span.dish-card__footer__aside(v-if = "dish.aside") {{dish.aside}}
 </template>
 
 <script>
@@ -148,11 +148,11 @@ export default {
       line-height: 12px;
       letter-spacing: 0.05em;
       color: var(--color-muted);
+      margin-left: auto;
     }
     &__btn {
       padding: 3px 8px 4px 6px;
-      margin-left: auto;
-      @include btn();
+      @include btn;
     }
   }
 }

@@ -3,31 +3,32 @@
     AppHeader(title="Профиль")
     main
       section.row
-        .form
+        .form.col
           Input(placeholder="Имя", value="Константин Константинопольский")
           Input(placeholder="Телефон", value="8 990 800 70 70")
           Input(placeholder="Дата рождения", value="", @inputData="birthdayInput")
-          .caption(:class="{'__show': birthdayCaptionShow}") 
-            img.caption-img(src='./assets/profile/giftbox.svg')
-            span.caption-text Заполните, чтобы получиать скидки и подарки на&nbsp;день&nbsp;рождения
+          .caption(:class="{'caption--show': birthdayCaptionShow}") 
+            span.caption__text Заполните, чтобы получать скидки и&nbsp;подарки на&nbsp;день&nbsp;рождения
+            img.caption__img(src='./assets/profile/giftbox.svg')
           
           Group(v-for="adress in addressGroups", :key="adress.id", :title="adress.title" :active="adress.active")
             Input(placeholder="Улица", :value='adress.street')
-            .form-group__small
+            .form-group--small
               Input(placeholder="Дом, корпус", :value='adress.house')
-            .form-group__small
+            .form-group--small
               Input(placeholder="Подъезд", :value='adress.door')
-            .form-group__small
+            .form-group--small
               Input(placeholder="Этаж", :value='adress.floor')
-            .form-group__small
+            .form-group--small
               Input(placeholder="Квартира или офис", :value='adress.appartment')
             Input(placeholder="Комментарий", :value='adress.comment')
           
-          .form-group.form-group__add
-            Input(placeholder="Добавить адрес", name="newGroup", @inputData="addGroup")
+          .form-group.form-group--add
+            //Input(placeholder="Добавить адрес", name="newGroup", @inputData="addGroup")
+            Button(text="Добавить адрес")
           
           .form-group
-            a.link.link__exit Выйти →
+            a.link.link--exit Выйти →
    
  </template>
 
@@ -35,11 +36,13 @@
 import AppHeader from "@/components/layout/AppHeader";
 import Input from "@/components/form/Input";
 import Group from "@/components/form/Group";
+import Button from "@/components/form/Button";
 export default {
   components: {
     AppHeader,
     Input,
-    Group
+    Group,
+    Button
   },
   data() {
     return {
@@ -83,40 +86,52 @@ export default {
 
 <style lang="scss">
 .caption {
-  font-size: 12px;
-  line-height: 15px;
-  color: var(--primary);
+  line-height: 20px;
   display: flex;
-  align-items: bottom;
-  padding-bottom: 2px;
+  align-items: center;
+  color: var(--color-muted);
   transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   height: 0;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 45px !important;
+  padding: 0 var(--view-margin);
   overflow: hidden;
   opacity: 0;
-  &-img {
+  background-color: var(--plain);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  &__img {
     margin-right: 6px;
     width: 30px;
     height: 28px;
+    margin-bottom: 3px;
   }
-  &-text {
-    margin-bottom: -3px;
+  &__text {
   }
-  &.__show {
+  &--show {
     margin-top: 19px;
     margin-bottom: 9px;
     opacity: 1;
-    height: 32px;
+
+    height: 68px;
+    padding: 13px var(--view-margin) var(--view-margin);
   }
 }
 .form-group {
-  &__small {
+  &--small {
     width: calc(50% - var(--view-gap) / 2);
   }
-  &__add {
-    margin-top: 3px;
+  &--add {
     width: 100%;
+  }
+}
+.link--exit {
+  margin-bottom: var(--view-margin);
+  margin-top: 45px;
+}
+.col {
+  & > *:not(:last-child) {
+    margin-bottom: auto;
   }
 }
 </style>
