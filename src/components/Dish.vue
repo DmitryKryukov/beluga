@@ -4,6 +4,11 @@
       .row
         .col
           .dish__header
+            .dish__header__favourite(@click = "addToFavourite")
+              <img svg-inline src="./assets/footer/favourite.svg">
+            router-link(:to = "{path: '/'}" )
+              .dish__header__cross(@click = "prevView")
+                <img svg-inline src="./assets/cross white thin.svg">              
             .dish__header__photo
           .dish__info
             .dish__info__name Лопатка ягнёнка
@@ -30,19 +35,80 @@ export default {
     DishButton
   },
   data() {
-    return {};
+    return {
+      cartQuantity: 0
+    };
   },
   computed: {},
   methods: {
+    addToFavourite() {
+      event.target.classList.toggle("dish__header__favourite--active");
+      ripple(event);
+      function ripple(e) {
+        const rect = {
+          top:
+            e.target.getBoundingClientRect().top +
+            e.target.offsetParent.scrollTop,
+          left:
+            e.target.getBoundingClientRect().left +
+            e.target.offsetParent.scrollLeft
+        };
+        var clickPosition = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+        var ripple = document.createElement("div");
+        ripple.className = "rippler";
+        ripple.style.left = clickPosition.x + "px";
+        ripple.style.top = clickPosition.y + "px";
+        e.target.appendChild(ripple);
+        ripple.addEventListener("animationend", function() {
+          ripple.remove();
+        });
+      }
+    },
+    prevView() {
+      ripple(event);
+      function ripple(e) {
+        const rect = {
+          top:
+            e.target.getBoundingClientRect().top +
+            e.target.offsetParent.scrollTop,
+          left:
+            e.target.getBoundingClientRect().left +
+            e.target.offsetParent.scrollLeft
+        };
+        var clickPosition = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+        var ripple = document.createElement("div");
+        ripple.className = "rippler";
+        ripple.style.left = clickPosition.x + "px";
+        ripple.style.top = clickPosition.y + "px";
+        e.target.appendChild(ripple);
+        ripple.addEventListener("animationend", function() {
+          ripple.remove();
+        });
+      }
+    },
     addToCart() {
-      this.$refs.toast.classList.remove("toast--enter");
-      setTimeout(() => {
-        this.$refs.toast.classList.add("toast--leave");
+      if (this.$refs.toast.classList.contains("toast--enter")) {
+        this.cartQuantity++;
+        this.$refs.toast.classList.remove("toast--enter");
         setTimeout(() => {
-          this.$refs.toast.classList.remove("toast--leave");
-          this.$refs.toast.classList.add("toast--enter");
-        }, 300);
-      }, 1000);
+          this.$refs.toast.classList.add("toast--leave");
+          setTimeout(() => {
+            this.$refs.toast.classList.remove("toast--leave");
+            this.$refs.toast.classList.add("toast--enter");
+          }, 300);
+        }, 1000);
+      } else {
+        this.cartQuantity++;
+        console.log(this.$refs.toast.childNodes[0].textContent);
+        this.$refs.toast.childNodes[0].textContent =
+          "Добавлено в корзину: " + this.cartQuantity;
+      }
     }
   }
 };
@@ -59,7 +125,57 @@ export default {
     right: 0;
     &__photo {
       height: 250px;
-      background-color: var(--plain);
+      background: var(--grad-placeholder);
+    }
+    &__cross {
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      top: var(--view-gap);
+      right: var(--view-gap);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      svg {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+    &__favourite {
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      top: var(--view-gap);
+      left: var(--view-gap);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      overflow: hidden;
+      transition: color 0.2s var(--ease);
+      &:active {
+        svg {
+          transform: scale(1.2);
+        }
+      }
+      svg {
+        opacity: 0.5;
+        stroke: white;
+        stroke-width: 1px;
+        height: 26px;
+        pointer-events: none;
+        transition: all 0.2s var(--ease);
+      }
+      &--active {
+        color: white;
+        svg {
+          opacity: 1;
+          stroke-width: 0;
+        }
+      }
     }
   }
   &__info {
@@ -67,6 +183,7 @@ export default {
     padding-top: 20px;
     &__name {
       @include heading;
+      line-height: 1.25;
     }
     .row {
       justify-content: space-between;
@@ -104,7 +221,7 @@ export default {
   background-color: var(--plain);
   padding: var(--view-margin);
   border-radius: var(--border-radius);
-  transition: all 0.1s;
+  transition: all 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   transform: translateY(0);
   opacity: 1;
@@ -114,7 +231,7 @@ export default {
     opacity: 0;
   }
   &--leave {
-    transform: translateY(-20px) scale(0.9);
+    transform: translateY(-10px) scale(0.9);
     opacity: 0;
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }

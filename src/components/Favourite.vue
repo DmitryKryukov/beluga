@@ -40,8 +40,8 @@ export default {
 @import "../styles/mixins";
 /deep/ .dish-card {
   //Добавляем поле между карточками блюд
-  margin-top: var(--view-gap);
-  margin-bottom: var(--view-gap);
+  margin-top: var(--view-margin);
+  margin-bottom: var(--view-margin);
 }
 .col:first-of-type {
   & > *:nth-child(even) {
@@ -72,12 +72,13 @@ export default {
     text-align: center;
     margin-bottom: var(--view-margin);
     @include heading;
+    width: 85%;
   }
   &__text {
     text-align: center;
     @include body;
     color: var(--color-muted);
-    width: 80%;
+    width: 85%;
   }
 }
 </style>

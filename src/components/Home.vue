@@ -55,8 +55,8 @@ export default {
 <style lang="scss" scoped>
 /deep/ .dish-card {
   //Добавляем поле между карточками блюд
-  margin-top: var(--view-gap);
-  margin-bottom: var(--view-gap);
+  margin-top: var(--view-margin);
+  margin-bottom: var(--view-margin);
 }
 .col:first-of-type {
   & > *:nth-child(even) {

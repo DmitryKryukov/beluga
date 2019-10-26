@@ -169,6 +169,6 @@ export default {
   }
   width: 10px;
   height: 10px;
-  animation: ripplerScale 1s cubic-bezier(0.42, 0, 0.58, 1);
+  animation: ripplerScale 0.5s cubic-bezier(0.42, 0, 0.58, 1);
 }
 </style>

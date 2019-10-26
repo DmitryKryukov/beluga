@@ -1,6 +1,8 @@
 <template lang="pug">
     .btn-group
-      button(@click="btnClick").btn: slot(name='prefix') {{text}}
+      button(@click="btnClick").btn
+        slot(name='prefix')
+        span {{text}}
         slot(name='postfix')
         
  </template>
@@ -57,7 +59,7 @@ export default {
   box-sizing: border-box;
   padding: 17px 21px 18px;
   font-size: 17px;
-
+  display: flex;
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -66,7 +68,16 @@ export default {
   font-family: var(--font-family);
   transition: all 0.3s var(--ease);
   user-select: none;
-
+  justify-content: center;
+  span {
+    pointer-events: none;
+  }
+  &__prefix {
+    margin-right: var(--view-gap);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
   &-group {
     width: 100%;
     background-color: var(--primary);
