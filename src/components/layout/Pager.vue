@@ -179,8 +179,12 @@ export default {
 
       this.pager.pages.current = Math.floor(relPage);
       this.pager.pages.currentApprox = Math.round(relPage);
+      console.log(this.pager.el.scrollLeft);
       this.pager.el.style.maxHeight = "none";
       this.pager.el.style.overflowY = "visible";
+      if (this.pager.el.scrollLeft < 0.1) {
+        this.changePageHeight(0);
+      }
 
       this.handleIndicatorSmooth(pagerScrollPosition);
       this.scrollerScroll();

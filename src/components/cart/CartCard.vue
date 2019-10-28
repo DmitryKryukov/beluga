@@ -2,18 +2,18 @@
   .wrapper(ref="wrapper", v-touch:end="cartCardTouch")
     .wrapper-inner
       .cart-card(ref="card")
-        .cart-card-photo
-        .cart-card-col
-          h2.cart-card-name {{dish.name}}
-          .cart-card-footer
-            .cart-card-footer-quantity
-              .cart-card-footer-quantity-minus(@click.stop.prevent="quantityClick") −
-              .cart-card-footer-quantity-current {{Quantity}}
-              .cart-card-footer-quantity-plus(@click.stop.prevent="quantityClick") +
-            .cart-card-footer-price
-              main {{dish.priceNum * Quantity}}
-              aside &thinsp;₽
-      .cart-card-delete
+        .cart-card__photo
+        .cart-card__col
+          h2.cart-card__name {{dish.name}}
+          .cart-card__footer
+            .cart-card__footer__quantity
+              .cart-card__footer__quantity--minus(@click.stop.prevent="quantityClick") −
+              .cart-card__footer__quantity--current {{Quantity}}
+              .cart-card__footer__quantity--plus(@click.stop.prevent="quantityClick") +
+            footer.cart-card__footer__price
+              .cart-card__footer__price--main {{dish.price.slice(0,-2) * Quantity}}
+              .cart-card__footer__price--aside &thinsp;₽
+      .cart-card__delete
 
 </template>
 
@@ -85,7 +85,9 @@ export default {
       }
     },
     quantityClick: function(event) {
-      if (event.target.classList.contains("cart-card-footer-quantity-minus")) {
+      if (
+        event.target.classList.contains("cart-card__footer__quantity--minus")
+      ) {
         if (this.Quantity > 1) {
           this.Quantity -= 1;
         } else {
@@ -129,7 +131,6 @@ export default {
   margin-left: -15%;
   padding-left: 15%;
   border-radius: var(--border-radius);
-  height: 100px;
   overflow: scroll;
   scroll-behavior: smooth;
   &-inner {
@@ -146,19 +147,22 @@ export default {
   position: relative;
   transition: all 1s;
   width: calc(100vw - var(--view-margin) * 2);
-  &-photo {
+  &__photo {
     pointer-events: none;
     background-image: var(--grad-placeholder);
     background-color: #3c3f43;
     width: 130px;
   }
-  &-name {
+  &__col {
+    width: calc(100% - 130px);
+  }
+  &__name {
     pointer-events: none;
     font-size: var(--font-size-heading);
     margin: 10px 13px 53px;
     line-height: 20px;
   }
-  &-footer {
+  &__footer {
     position: absolute;
     bottom: 0;
     box-sizing: border-box;
@@ -167,11 +171,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &-quantity {
+    &__quantity {
       display: flex;
       align-items: center;
-      &-minus,
-      &-plus {
+      &--minus,
+      &--plus {
         position: relative;
         padding: 4px;
         background-color: var(--plain);
@@ -182,25 +186,25 @@ export default {
         border-radius: 50%;
         overflow: hidden;
       }
-      &-current {
+      &--current {
         color: var(--color-muted);
         margin-left: 0.5rem;
         margin-right: 0.5rem;
       }
     }
-    &-price {
+    &__price {
       display: flex;
       align-items: baseline;
       margin-right: var(--view-gap);
-      main {
+      &--main {
         font-size: 19px;
       }
-      aside {
+      &--aside {
         font-size: 16px;
       }
     }
   }
-  &-delete {
+  &__delete {
     position: absolute;
     left: 1px;
     top: 0;

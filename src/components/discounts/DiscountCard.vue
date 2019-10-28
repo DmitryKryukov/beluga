@@ -37,7 +37,8 @@ export default {
     line-height: 24px;
   }
   &__description {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    margin-top: 0.3rem;
     margin-bottom: 0.3rem;
   }
   &__code {

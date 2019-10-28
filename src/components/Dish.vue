@@ -128,6 +128,10 @@ export default {
         this.$refs.toast.childNodes[0].textContent =
           "Добавлено в корзину: " + this.cartQuantity;
       }
+      let dish = this.dish;
+      let cartQuantity = this.cartQuantity;
+      store.cart.push({ dish, cartQuantity });
+      console.log(store);
     }
   }
 };

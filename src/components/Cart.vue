@@ -1,19 +1,19 @@
 <template lang="pug">
   #page
     AppHeader(title="Корзина")
-      .app-header-quantity.link.__muted {{cart.dishes.length}}
+      .app-header__quantity {{store.cart.length}}
     main
-      section.row
-        .col
-          CartCard(:dish="cart.dishes[0]" :quantity="2")
-          CartCard(:dish="cart.dishes[0]" :quantity="3")
-          CartCard(:dish="cart.dishes[0]" :quantity="1")
-          hr
-          Input(placeholder="Промокод", value='HuiPizda')
-            img(src="./assets/cart/promo.svg", alt="Промокод")
-      
-          RecomendationCard(:dish="cart.dishes[0]")
-          Button(text="Оформить за 900 ₽")
+      section
+        .row
+          .col
+            CartCard(v-for="cartItem in store.cart", :key="1", :dish="cartItem.dish" :quantity="1")
+            hr(v-if="store.cart.length != 0")
+            Input(placeholder="Промокод", value='HuiPizda')
+              img(src="./assets/cart/promo.svg", alt="Промокод")
+            RecomendationCard(:dish="cart.dishes[0]")
+            footer.cart-footer
+              router-link(:to = "{path: '/cart/checkout'}" )   
+                Button(text="Оформить за 900 ₽")
  </template>
 
 <script>
@@ -22,6 +22,7 @@ import CartCard from "@/components/cart/CartCard";
 import RecomendationCard from "@/components/cart/RecomendationCard";
 import Input from "@/components/form/Input";
 import Button from "@/components/form/Button";
+import store from "@/store/store";
 
 export default {
   components: {
@@ -31,6 +32,7 @@ export default {
     Input,
     Button
   },
+  mounted() {},
   data() {
     return {
       cart: {
@@ -43,20 +45,16 @@ export default {
             priceNum: 295
           }
         ]
-      }
+      },
+      store
     };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-#page {
-  padding-bottom: 155px;
-}
-main {
-  padding-top: 20px;
-}
-.app-header-quantity {
+.app-header__quantity {
+  color: var(--color-muted);
   &::before {
     content: "";
     display: inline-block;
@@ -67,15 +65,25 @@ main {
     background-size: contain;
   }
 }
-.recomendation {
-  margin-bottom: 20px;
-  margin-top: 20px;
+/deep/ .wrapper {
+  margin-top: var(--view-margin);
+  margin-bottom: var(--view-margin);
 }
-.btn-group {
-  box-shadow: 0 -10px 30px 0 var(--bg), 20px 20px 0 0 var(--bg),
-    -20px 20px 0 0 var(--bg);
+.recomendation {
+  margin-top: 20px;
+  margin-bottom: 89px;
+}
+.cart-footer {
+  pointer-events: none;
   position: fixed;
-  bottom: 98px;
-  width: calc(100% - var(--view-margin) * 2) !important;
+  width: 100%;
+  left: 0;
+  box-sizing: border-box;
+  z-index: 2;
+  padding: 0 var(--view-margin) var(--view-margin);
+  bottom: 82px;
+  .btn-group {
+    pointer-events: all;
+  }
 }
 </style>

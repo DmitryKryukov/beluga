@@ -52,7 +52,7 @@ export default {
 <style lang="scss">
 @import "../../styles/mixins";
 .group {
-  height: 50px;
+  height: 30px;
   width: 100%;
   margin-bottom: var(--view-margin) !important;
   transition: all 0.3s cubic-bezier(0.42, 0, 0.58, 1);

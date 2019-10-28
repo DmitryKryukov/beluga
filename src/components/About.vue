@@ -36,7 +36,7 @@
             +area("Зал Прикаспийских государств", 30)
             +area("Зеркальная комната", 20)
             +area("Изумрудный зал", 45)
-      section
+      section#discount
         .row
           .col
             DiscountCard(name="Бизнес-ланч за\xa0350\u2009₽ с\xa013:00 до\xa016:30", code="lunchbox")
@@ -51,6 +51,7 @@ import AppHeader from "@/components/layout/AppHeader";
 import Button from "@/components/form/Button";
 import Pager from "@/components/layout/Pager";
 import DiscountCard from "@/components/discounts/DiscountCard";
+
 export default {
   components: {
     AppHeader,

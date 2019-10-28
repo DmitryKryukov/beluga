@@ -24,8 +24,8 @@
             Input(placeholder="Комментарий", :value='adress.comment')
           
           .form-group.form-group--add
-            //Input(placeholder="Добавить адрес", name="newGroup", @inputData="addGroup")
-            Button(text="Добавить адрес")
+            Input(placeholder="Добавить адрес", name="newGroup", @inputData="addGroup")
+            //Button(text="Добавить адрес")
           
           .form-group
             a.link.link--exit Выйти →
@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .caption {
   line-height: 20px;
   display: flex;

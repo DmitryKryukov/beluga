@@ -6,6 +6,7 @@ import Favourite from "@/components/Favourite";
 import About from "@/components/About";
 import Profile from "@/components/Profile";
 import Cart from "@/components/Cart";
+import Checkout from "@/components/Checkout";
 Vue.use(Router);
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: "/cart",
       name: "Cart",
       component: Cart
+    },
+    {
+      path: "/cart/checkout",
+      name: "Checkout",
+      component: Checkout
     }
   ]
 });
