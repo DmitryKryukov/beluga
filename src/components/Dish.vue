@@ -15,24 +15,23 @@
             .row
               .dish__info__category {{category.name}}
               .dish__info__aside {{ dish.aside }}
-            .dish__info__caption Ингредиенты
-            .dish__info__ingredient Филе щуки, морковь, лук репчатый, чёрный перец, красный перец, соль
+            template(v-if="dish.ingredient")
+              .dish__info__caption Ингредиенты
+              .dish__info__ingredient {{ dish.ingredient }}
           .toast.toast--enter(ref="toast")
             .toast__text Добавлено в корзину
           footer.dish__footer
-            DishButton(:text="dish.price", @addToCart = "addToCart").dish__footer__btn
+            dish-button(:text="dish.price", @addToCart = "addToCart").dish__footer__btn
     
  </template>
 
 <script>
-import AppHeader from "@/components/layout/AppHeader";
-import DishButton from "@/components/form/DishButton";
+import dishButton from "@/components/form/DishButton";
 import store from "@/store/store";
 
 export default {
   components: {
-    AppHeader,
-    DishButton
+    dishButton
   },
   data() {
     return {
@@ -55,12 +54,41 @@ export default {
         find = false;
       }
     });
+
+    store.cart.forEach(cartItem => {
+      if (cartItem.dish.id == this.dish.id) {
+        this.cartQuantity = cartItem.cartQuantity;
+      }
+    });
+
     if (this.dish.favourite) {
       this.$refs.favourite.classList.add("dish__header__favourite--active");
     }
   },
   methods: {
     addToFavourite() {
+      //todo Зарефакторить на отдельные методы, иначе сложно понимать что тут происходит
+      store.categories.forEach(category => {
+        category.dishes.forEach(dish => {
+          if (dish.id == this.dish.id) {
+            dish.favourite = !dish.favourite;
+          }
+        });
+      });
+      if (this.dish.favourite) {
+        if (!(this.dish in store.favourite)) {
+          store.favourite.push(this.dish);
+        }
+      } else {
+        let i = 0;
+        store.favourite.forEach(favouriteDish => {
+          //todo Можно попробовать переделать на for ... in
+          if (favouriteDish.id == this.dish.id) {
+            store.favourite.splice(i, 1);
+          }
+          i++;
+        });
+      }
       event.target.classList.toggle("dish__header__favourite--active");
       ripple(event);
       function ripple(e) {
@@ -130,8 +158,16 @@ export default {
       }
       let dish = this.dish;
       let cartQuantity = this.cartQuantity;
-      store.cart.push({ dish, cartQuantity });
-      console.log(store);
+      let newDishInCart = true;
+      store.cart.forEach(cartItem => {
+        if (cartItem.dish.id == dish.id) {
+          newDishInCart = false;
+          cartItem.cartQuantity = cartQuantity;
+        }
+      });
+      if (newDishInCart) {
+        store.cart.push({ dish, cartQuantity });
+      }
     }
   }
 };

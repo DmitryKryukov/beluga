@@ -2,50 +2,29 @@
   #app
     .main-wrapper
       transition(name="slide")
-        router-view(@nextView = "viewScroll")
-    AppFooter(@nextView = "viewScroll")
+        router-view(@nextView = "preserveScrollPosition")
+    app-footer(@nextView = "preserveScrollPosition")
 </template>
 
 <script>
-import AppFooter from "@/components/layout/AppFooter";
+import appFooter from "@/components/layout/AppFooter";
 
 export default {
   name: "app",
   components: {
-    AppFooter
+    appFooter
   },
   methods: {
-    viewScroll(viewScrollY) {
+    preserveScrollPosition(viewScrollY) {
       let scroll = "-" + viewScrollY + "px";
       document.documentElement.style.setProperty("--scrollYView", scroll);
     }
   }
 };
 </script>
-<style src="./styles/global.scss" lang="scss"></style>
-<style scoped lang="scss">
+<style lang="scss">
+@import "./styles/global.scss";
 .main-wrapper {
-  min-height: calc(
-    100vh - 85px
-  ); //Свойство добавлено, чтобы подвал не прыгал при изменении позишн содержимого на фиксед. 85px — высота футера
-}
-.slide-enter-active,
-.slide-leave-active {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  transition: all 0.3s var(--ease);
-}
-.slide-leave-active {
-  top: var(--scrollYView);
-}
-.slide-enter {
-  transform: translateX(50vw);
-  opacity: 0;
-}
-.slide-leave-to {
-  transform: translateX(-50vw);
-  opacity: 0;
+  min-height: calc(100vh - 85px);
 }
 </style>

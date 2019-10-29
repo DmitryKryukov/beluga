@@ -1,58 +1,74 @@
 <template lang="pug">
   #page
-    AppHeader(title="Корзина")
-      .app-header__quantity {{store.cart.length}}
+    app-header(title="Корзина"): .app-header__quantity {{store.cart.length}}
+    
     main
-      section
-        .row
-          .col
-            CartCard(v-for="cartItem in store.cart", :key="1", :dish="cartItem.dish" :quantity="1")
-            hr(v-if="store.cart.length != 0")
-            Input(placeholder="Промокод", value='HuiPizda')
-              img(src="./assets/cart/promo.svg", alt="Промокод")
-            RecomendationCard(:dish="cart.dishes[0]")
-            footer.cart-footer
-              router-link(:to = "{path: '/cart/checkout'}" )   
-                Button(text="Оформить за 900 ₽")
+      section: .row: .col
+        template(v-if="store.cart.length == 0")
+          .cart__empty
+            .cart__empty__image 
+            .cart__empty__heading В корзине нет ни одного блюда
+            .cart__empty__text Нажмите на значок в карточке блюда, чтобы добавить первое
+        
+        template(v-if="store.cart.length !== 0")
+          cart-card(v-for="cartItem in store.cart", :dish="cartItem.dish", :quantity="cartItem.cartQuantity", @calcPrice="priceCalc")
+            
+          hr
+          rich-input(placeholder="Промокод", value='HuiPizda')
+            img(src="./assets/cart/promo.svg", alt="Промокод")
+
+          recomendation-card(title="Не забудьте соус", :dish = "recomendedDish", callToAction = "Добавить")
+
+          footer.cart-footer
+            router-link(:to = "{path: '/cart/checkout'}" )   
+            rich-button(:text="'Оформить за ' + priceSum + '\xa0₽'" )
  </template>
 
 <script>
-import AppHeader from "@/components/layout/AppHeader";
-import CartCard from "@/components/cart/CartCard";
-import RecomendationCard from "@/components/cart/RecomendationCard";
-import Input from "@/components/form/Input";
-import Button from "@/components/form/Button";
+import appHeader from "@/components/layout/AppHeader";
+import cartCard from "@/components/cart/CartCard";
+import recomendationCard from "@/components/cart/RecomendationCard";
+import richInput from "@/components/form/Input";
+import richButton from "@/components/form/Button";
 import store from "@/store/store";
 
 export default {
   components: {
-    AppHeader,
-    CartCard,
-    RecomendationCard,
-    Input,
-    Button
+    appHeader,
+    cartCard,
+    recomendationCard,
+    richInput,
+    richButton
   },
-  mounted() {},
+  mounted() {
+    this.priceCalc();
+  },
   data() {
     return {
-      cart: {
-        dishes: [
-          {
-            id: 0,
-            name: "Котлета из\xa0щуки с\xa0пюре",
-            aside: "320\xa0г",
-            price: "+\xa0295\xa0₽",
-            priceNum: 295
-          }
-        ]
+      recomendedDish: {
+        id: 0,
+        name: "Аджика",
+        aside: "50\xa0мл",
+        price: "+\xa0295\xa0₽"
       },
-      store
+      store,
+      priceSum: 0
     };
+  },
+  methods: {
+    priceCalc() {
+      let price = 0;
+      store.cart.forEach(cartItem => {
+        price += cartItem.dish.price.slice(0, -2) * cartItem.cartQuantity;
+      });
+      this.priceSum = price;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/mixins";
 .app-header__quantity {
   color: var(--color-muted);
   &::before {
@@ -84,6 +100,34 @@ export default {
   bottom: 82px;
   .btn-group {
     pointer-events: all;
+  }
+}
+
+.cart__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 85px - 126px);
+  &__image {
+    background-color: var(--plain);
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    margin-bottom: 45px;
+  }
+  &__heading {
+    text-align: center;
+    margin-bottom: var(--view-margin);
+    @include heading;
+    width: 85%;
+  }
+  &__text {
+    text-align: center;
+    @include body;
+    color: var(--color-muted);
+    width: 85%;
   }
 }
 </style>

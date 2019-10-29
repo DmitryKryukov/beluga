@@ -1,27 +1,28 @@
 <template lang="pug">
   #page
-    AppHeader(title="Любимое")
-    section.row(v-if="store.favourite.length !== 0")
-     .col 
-        DishCard(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
-     .col
-        DishCard(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
+    app-header(title="Любимое")
     section.row(v-if="store.favourite.length == 0")
       .favourite__empty
         .favourite__empty__image 
         .favourite__empty__heading Список любимых блюд пуст
         .favourite__empty__text Нажмите на значок в карточке блюда, чтобы добавить первое
+    
+    section.row(v-if="store.favourite.length !== 0")
+     .col 
+        dish-card(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
+     .col
+        dish-card(v-for="dish in store.favourite", :key="dish.id", :dish="dish", @nextView="goToDishView")
  </template>
 
 <script>
-import AppHeader from "@/components/layout/AppHeader";
-import DishCard from "@/components/dishes/DishCard";
+import appHeader from "@/components/layout/AppHeader";
+import dishCard from "@/components/dishes/DishCard";
 import store from "@/store/store";
 
 export default {
   components: {
-    AppHeader,
-    DishCard
+    appHeader,
+    dishCard
   },
   data() {
     return {
@@ -39,21 +40,20 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/mixins";
 /deep/ .dish-card {
-  //Добавляем поле между карточками блюд
   margin-top: var(--view-margin);
   margin-bottom: var(--view-margin);
 }
 .col:first-of-type {
-  & > *:nth-child(even) {
+  & > .dish-card:nth-child(even) {
+    display: none;
+  }
+}
+.col:last-of-type {
+  & > .dish-card:nth-child(odd) {
     display: none;
   }
 }
 
-.col:last-of-type {
-  & > *:nth-child(odd) {
-    display: none;
-  }
-}
 .favourite__empty {
   display: flex;
   flex-direction: column;

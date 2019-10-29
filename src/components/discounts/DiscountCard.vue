@@ -6,15 +6,22 @@
 </template>
 
 <script>
-import store from "@/store/store";
 export default {
   props: {
-    name: { type: String, default: "Название акции" },
-    description: { type: String },
-    code: { type: String, default: "Code30" }
+    name: {
+      type: String,
+      default: "Название акции"
+    },
+    description: {
+      type: String
+    },
+    code: {
+      type: String
+    }
   }
 };
 </script>
+
 <style scoped lang="scss">
 @import "../../styles/mixins";
 .discount-card {
@@ -60,7 +67,6 @@ export default {
       bottom: 0;
       left: 5px;
       width: 1px;
-      //border-left: 1px dashed var(--color-muted);
       border-left: 1px dashed black;
     }
     &:after {

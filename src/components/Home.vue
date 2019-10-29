@@ -1,33 +1,32 @@
 <template lang="pug">
   #page
-    AppHeader(title="Белуга")
-        a(href="#/about#discount").app-header__link Все акции →
-    aside.scroller.scroller--discount.scroller--borderless
-      DiscountCard(name="Бизнес-ланч за\xa0350\u2009₽", description = "с\xa013:00 до\xa016:30", code="lunchbox")
-      DiscountCard
-      DiscountCard
-      DiscountCard
-    Pager(:tabs = "tabs")
+    app-header(title="Белуга")
+
+    .scroller.scroller--discount.scroller--borderless
+      discount-card(v-for="discount in store.discounts", :key="discount.id", :name="discount.name", :description = "discount.description", :code = "discount.code")
+    
+    pager(:tabs = "tabs")
       section(v-for="category in store.categories", :key="category.id")
         .row
           .col 
-            DishCard(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="goToDishView")
+            dish-card(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="preserveScrollPosition")
           .col
-            DishCard(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="goToDishView")
+            dish-card(v-for="dish in category.dishes", :key="dish.id", :dish="dish", @nextView="preserveScrollPosition")
  </template>
 
 <script>
-import AppHeader from "@/components/layout/AppHeader";
-import Pager from "@/components/layout/Pager";
-import DishCard from "@/components/dishes/DishCard";
-import DiscountCard from "@/components/discounts/DiscountCard";
+import appHeader from "@/components/layout/AppHeader";
+import discountCard from "@/components/discounts/DiscountCard";
+import pager from "@/components/layout/Pager";
+import dishCard from "@/components/dishes/DishCard";
 import store from "@/store/store";
+
 export default {
   components: {
-    AppHeader,
-    DishCard,
-    DiscountCard,
-    Pager
+    appHeader,
+    discountCard,
+    pager,
+    dishCard
   },
   data() {
     return {
@@ -45,7 +44,7 @@ export default {
     }
   },
   methods: {
-    goToDishView() {
+    preserveScrollPosition() {
       this.$emit("nextView", window.pageYOffset);
     }
   }
@@ -54,22 +53,19 @@ export default {
 
 <style lang="scss" scoped>
 /deep/ .dish-card {
-  //Добавляем поле между карточками блюд
   margin-top: var(--view-margin);
   margin-bottom: var(--view-margin);
 }
 .col:first-of-type {
-  & > *:nth-child(even) {
+  & > .dish-card:nth-child(even) {
     display: none;
   }
 }
-
 .col:last-of-type {
-  & > *:nth-child(odd) {
+  & > .dish-card:nth-child(odd) {
     display: none;
   }
 }
-
 .scroller--discount {
   padding-bottom: 21px;
 }

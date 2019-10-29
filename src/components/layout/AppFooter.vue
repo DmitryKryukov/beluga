@@ -26,22 +26,35 @@
       .app-footer__item(@click="routerClick")
         <img svg-inline class="app-footer__item__icon" :src="../assets/footer/cart.svg" alt="" />
         .app-footer__item__text Корзина
+        .app-footer__item__badge(ref="cartBadge", :class="{'app-footer__item__badge--show':store.cart.length !== 0}") {{ store.cart.length }}
 </template>
 
 <script>
 let nextFooterItemId = 0;
+import store from "@/store/store";
 
 export default {
   data() {
-    return {};
+    return { store };
   },
   methods: {
     routerClick() {
       this.$emit("nextView", window.pageYOffset);
     }
+  },
+  watch: {
+    "store.cart.length": function() {
+      this.$refs.cartBadge.classList.add("app-footer__item__badge--change");
+      setTimeout(() => {
+        this.$refs.cartBadge.classList.remove(
+          "app-footer__item__badge--change"
+        );
+      }, 100);
+    }
   }
 };
 </script>
+
 <style scoped  lang="scss">
 .app-footer {
   position: sticky;
@@ -56,17 +69,14 @@ export default {
   & > * {
     flex: 1 100%;
   }
-  .router-link-exact-active {
-    .app-footer__item {
-      color: var(--color);
-    }
-  }
+
   &__item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--color-muted);
+    position: relative;
 
     &__icon {
       height: 34px;
@@ -77,6 +87,32 @@ export default {
       font-size: var(--font-size-footer);
       text-align: center;
     }
+    &__badge {
+      background-color: var(--primary);
+      color: var(--color);
+      font-size: 0.5em;
+      min-width: 8px;
+      min-height: 8px;
+      border-radius: 10px;
+      text-align: center;
+      padding: 2px 2px;
+      position: absolute;
+      top: 5%;
+      left: 60%;
+      transform: scale(0);
+      transition: all 0.1s var(--ease);
+      &--show {
+        transform: scale(1);
+      }
+      &--change {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+.router-link-exact-active {
+  .app-footer__item {
+    color: var(--color);
   }
 }
 </style>

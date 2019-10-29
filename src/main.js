@@ -4,8 +4,9 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router";
 import Vue2TouchEvents from "vue2-touch-events";
-
+import Fragment from "vue-fragment";
 Vue.use(Vue2TouchEvents);
+Vue.use(Fragment.Plugin);
 
 Vue.config.productionTip = false;
 

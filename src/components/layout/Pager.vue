@@ -1,16 +1,16 @@
 <template lang="pug">
   .wrapper
-    nav.scroller.scroller--nogap(ref = "scroller")
-      a.scroller__link(v-for = "tab in tabs", :key = "tab.id", :class = "{'scroller__link--active' : tab.active}" @click = "categoryClick(tab.id)") {{tab.name}}
+    nav.scroller.scroller--nogap(ref = "scroller", v-if = "tabs")
+      a.scroller__tab(v-for = "tab in tabs", :class = "{'scroller__tab--active' : tab.active}", @click = "tabClick(tab.id)") {{tab.name}}
       .scroller__indicator(ref = "indicator", :style = "'left:' + (scroller.indicator.startLeft  + scroller.indicator.relScroll * (scroller.indicator.goalLeft - scroller.indicator.startLeft))+'px; width:' + (scroller.indicator.startWidth  + scroller.indicator.relScroll * (scroller.indicator.goalWidth - scroller.indicator.startWidth))+'px;'")
-    main.pager(ref = "pager", @scroll = "pagerScroll", v-touch:start = "pagerTouch")
+    
+    .pager(ref = "pager", @scroll = "pagerScroll", v-touch:start = "pagerTouch")
       slot
  </template>
 
 <script>
-const indicatorMargin = 0;
 const footerHeight = 85;
-let self = {};
+
 export default {
   props: {
     tabs: {
@@ -27,7 +27,7 @@ export default {
           els: {},
           width: 0,
           current: 0,
-          currentApprox: 1,
+          currentApprox: 0,
           count: 0
         }
       },
@@ -66,10 +66,8 @@ export default {
       this.scroller.top = this.scroller.el.offsetTop;
       this.scroller.tabLinks.els = this.scroller.el.childNodes;
       this.scroller.tabLinks.els.forEach(function(tabLink) {
-        this.scroller.tabLinks.lefts.push(tabLink.offsetLeft + indicatorMargin);
-        this.scroller.tabLinks.widths.push(
-          tabLink.offsetWidth - indicatorMargin * 2
-        );
+        this.scroller.tabLinks.lefts.push(tabLink.offsetLeft);
+        this.scroller.tabLinks.widths.push(tabLink.offsetWidth);
       }, this);
       this.scroller.indicator.el = this.$refs.indicator;
 
@@ -141,7 +139,7 @@ export default {
       this.tabs[newVal - 1].active = true;
     },
 
-    categoryClick(pageNum) {
+    tabClick(pageNum) {
       this.scroller.lock = false;
       this.pager.el.scrollLeft = this.pager.pages.width * pageNum;
 
@@ -253,7 +251,7 @@ export default {
     will-change: left, width;
     transition: width 0.01s linear, left 0.01s linear;
   }
-  &__link {
+  &__tab {
     @include muted;
     position: relative;
     overflow: hidden;

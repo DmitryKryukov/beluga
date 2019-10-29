@@ -10,11 +10,13 @@ export default {
   props: {
     title: {
       type: String,
+      required: true,
       default: "Заголовок страницы"
     }
   }
 };
 </script>
+
 <style scoped lang="scss">
 @import "../../styles/mixins";
 .app-header {

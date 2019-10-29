@@ -1,6 +1,25 @@
 let nextCategoryId = 0;
 let nextDishId = 0;
 export default {
+  discounts: [
+    {
+      id: 0,
+      name: "Бизнес-ланч за\xa0350\u2009₽",
+      description: "с\xa013:00 до\xa016:30",
+      code: "lunchbox"
+    },
+
+    {
+      id: 1,
+      name: "Cкидка 15\u2009%",
+      description: "при первом заказе"
+    },
+    {
+      id: 2,
+      name: "Скидка\u200915% и десерт в\xa0подарок",
+      description: "на день рождения"
+    }
+  ],
   categories: [
     {
       id: nextCategoryId++,
@@ -12,7 +31,9 @@ export default {
           name: "Лопатка ягнёнка",
           aside: "320\xa0г",
           price: "1279\xa0₽",
-          favourite: false
+          favourite: false,
+          ingredient:
+            "Филе щуки, морковь, лук репчатый, чёрный перец, красный перец, соль"
         },
         {
           id: nextDishId++,

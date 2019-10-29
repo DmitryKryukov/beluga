@@ -3,18 +3,24 @@
       .recomendation-close(@click="cardClose")
       .recomendation-photo
       .recomendation-info
-        .recomendation-info-title Не забудьте соусы
-        h2.recomendation-info-name Аджика
-        .recomendation-info-aside 100 мл.
-        a.recomendation-info-link.link Добавить
+        .recomendation-info-title {{ title }}
+        h2.recomendation-info-name {{ dish.name }}
+        .recomendation-info-aside {{ dish.aside }}
+        a.recomendation-info-link.link {{ callToAction }}
 </template>
 
 <script>
 export default {
   props: {
+    title: {
+      type: String
+    },
     dish: {
       type: Object,
       required: true
+    },
+    callToAction: {
+      type: String
     }
   },
   methods: {

@@ -67,11 +67,16 @@ export default {
               this.$refs.card.style.marginBottom =
                 "-" + this.$refs.card.clientHeight - 9 + "px";
               store.favourite.splice(i, 1);
+              //setTimeout(() => {
+              //let x = i;
+              //alert(x);
+              //store.favourite.splice(x - 1, 1);
+              //}, 300);
             } else {
               store.favourite.splice(i, 1);
             }
           }
-          i += 1;
+          i++;
         }, this);
       }
     }
